@@ -5,36 +5,39 @@ import { Navigate } from "react-router-dom";
 import { toast, Toaster } from 'react-hot-toast';
 
 const SellerLogin = () => {
-    const { navigate, axios, setIsSeller, token, setToken } = useSellerContext()
+    const { navigate, axios, setIsSeller, isSeller, setSellerRole } = useSellerContext()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    if (token) {
+    if (isSeller) {
         return <Navigate to="/seller/dashboard" replace />;
     }
 
     const onSubmitHandler = async (event) => {
         try {
             event.preventDefault();
-            const { data } = await axios.post('/api/seller/login', { email, password })
-            if (data.success && data.token) {
+            const { data } = await axios.post(
+                '/api/seller/login',
+                { email, password },
+                { withCredentials: true }
+            )
 
-                localStorage.setItem("sellerToken", data.token);
+            if (data.success) {
+                if (![2, 3, 4].includes(data.user.role)) {
+                    toast.error("You are not authorized to access admin panel");
+                    return;
+                }
 
-                setToken(data.token);
                 setIsSeller(true);
+                setSellerRole(data.user.role); // ye missing tha — is line ke bina sidebar/role-checks fail hote hain
 
                 toast.success(data.message);
-
                 navigate('/seller/dashboard', { replace: true });
-
             } else {
-
                 toast.error(data.message)
-                navigate('/login')
             }
         } catch (error) {
-            toast.error(error.message)
+            toast.error(error.response?.data?.message || error.message)
         }
     }
 
@@ -42,19 +45,13 @@ const SellerLogin = () => {
         <div className='min-h-screen flex items-center justify-center bg-gray-50'>
             <Toaster
                 position="top-right"
-                toastOptions={{
-                    style: {
-                        zIndex: 999999,
-                    },
-                }}
+                toastOptions={{ style: { zIndex: 999999 } }}
             />
             <form onSubmit={onSubmitHandler} className='w-full max-w-md mx-4'>
                 <div className='flex flex-col gap-5 bg-white p-8 rounded-lg shadow-lg border border-gray-100'>
                     <div className='flex flex-col items-center'>
                         <img src={assets.logo} alt="logo" className='w-48 mb-2' />
-                        <h3 className='text-2xl font-medium mt-2'>
-                            Admin Login
-                        </h3>
+                        <h3 className='text-2xl font-medium mt-2'>Admin Login</h3>
                     </div>
 
                     <div className="w-full">
@@ -83,7 +80,7 @@ const SellerLogin = () => {
 
                     <button
                         type="submit"
-                        className="bg-primary hover:bg-primary-dark text-white w-full py-2 rounded-md transition-colors duration-300 mt-2  cursor-pointer"
+                        className="bg-primary hover:bg-primary-dark text-white w-full py-2 rounded-md transition-colors duration-300 mt-2 cursor-pointer"
                     >
                         Login
                     </button>

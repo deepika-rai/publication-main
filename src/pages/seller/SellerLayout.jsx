@@ -1,54 +1,46 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, Navigate, useNavigate } from "react-router-dom";
 import { assets } from "../../assets/assets";
 import { useSellerContext } from "../../context/SellerContext";
-import { Navigate, useNavigate } from "react-router-dom";
 import { toast, Toaster } from 'react-hot-toast';
-import axios from "axios";
 
 const SellerLayout = () => {
-    const { axios, setIsSeller, isSeller, token, setToken } = useSellerContext();
+    const { isSeller, sellerRole, authLoading, logoutSeller } = useSellerContext();
     const navigate = useNavigate();
-    // console.log("SellerLayout= isSeller=======>", isSeller);
-    // console.log("seller token========>", token);
-    if (!token) {
+
+    // Auth-check hone tak wait karo, warna premature redirect ho jayega
+    if (authLoading) {
+        return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+    }
+
+    if (!isSeller) {
         return <Navigate to="/login" replace />;
     }
 
-
-    const logout = async () => {
-        try {
-            const { data } = await axios.get('/api/seller/logout');
-
-            localStorage.removeItem("sellerToken");
-            setToken(null); // IMPORTANT
-            setIsSeller(false);
-
-            if (data.success) {
-                toast.success(data.message);
-                navigate("/login", { replace: true });
-            } else {
-                toast.error(data.message);
-            }
-        } catch (error) {
-            toast.error(error.message);
-        }
+    const handleLogout = async () => {
+        await logoutSeller(); // context ke andar cookie clear + navigate handle ho raha hai
+        toast.success("Logged out successfully");
     };
 
+    // role name for header greeting
+    const ROLE_NAMES = { 2: "Parliament Admin", 3: "Author Admin", 4: "Super Admin" };
 
     const sidebarLinks = [
-        { name: "Dashboard", path: "/seller/dashboard", icon: 'fa fa-dashboard' },
-        { name: "Book Management", path: "/seller/book-list", icon: 'fa fa-list-alt' },
-        { name: "Category Management", path: "/seller/category-list", icon: 'fa fa-tags' },
-        { name: "Question Management", path: "/seller/question-list", icon: 'fa fa-tags' },
-        { name: "User Management", path: "/seller/user-list", icon: 'fa fa-users' },
-        { name: "Order Management", path: "/seller/orders", icon: 'fa fa-shopping-cart' },
-        { name: "Payments", path: "/seller/payments", icon: 'fa fa-credit-card' },
-        { name: "Account Setting", path: "/seller/setting", icon: 'fa fa-cog' },
-        { name: "logout", action: logout, icon: 'fa fa-sign-out' }
+        { name: "Dashboard", path: "/seller/dashboard", icon: 'fa fa-dashboard', roles: [2, 3, 4] },
+
+        { name: "Book Management", path: "/seller/book-list", icon: 'fa fa-list-alt', roles: [3, 4] },
+        { name: "Category Management", path: "/seller/category-list", icon: 'fa fa-tags', roles: [3, 4] },
+        { name: "Order Management", path: "/seller/orders", icon: 'fa fa-shopping-cart', roles: [3, 4] },
+        { name: "User Management", path: "/seller/user-list", icon: 'fa fa-users', roles: [4] },
+        { name: "Payments", path: "/seller/payments", icon: 'fa fa-credit-card', roles: [4] },
+
+        { name: "Question Management", path: "/seller/question-list", icon: 'fa fa-tags', roles: [2] },
+        
+        { name: "Account Setting", path: "/seller/setting", icon: 'fa fa-cog', roles: [2, 3, 4] },
+        { name: "logout", action: handleLogout, icon: 'fa fa-sign-out', roles: [2, 3, 4] }
     ];
 
-
-
+    // sirf wahi links dikhao jo current role ke liye allowed hain
+    const visibleLinks = sidebarLinks.filter(item => item.roles.includes(sellerRole));
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -66,9 +58,9 @@ const SellerLayout = () => {
                     <img src={assets.logo} alt="logo" className="cursor-pointer w-34 md:w-38" />
                 </Link>
                 <div className="flex items-center gap-5 text-gray-600">
-                    <p className="font-medium">Hi! Admin</p>
+                    <p className="font-medium">Hi! {ROLE_NAMES[sellerRole] || "Admin"}</p>
                     <button
-                        onClick={logout}
+                        onClick={handleLogout}
                         className='border border-gray-300 rounded-full text-sm px-4 py-1 hover:bg-gray-100 transition-colors'
                     >
                         Logout
@@ -79,7 +71,7 @@ const SellerLayout = () => {
             <div className="flex">
                 {/* Sidebar */}
                 <aside className="md:w-64 w-16 bg-white shadow-sm h-[calc(100vh-60px)] sticky top-0 pt-6">
-                    {sidebarLinks.map((item, index) => (
+                    {visibleLinks.map((item, index) => (
                         item.action ? (
                             <div
                                 key={index}
@@ -100,23 +92,6 @@ const SellerLayout = () => {
                             </NavLink>
                         )
                     ))}
-                    {/* {sidebarLinks.map((item) => (
-                        <NavLink
-                            to={item.path}
-                            key={item.name}
-                            end={item.path === "/seller"}
-                            className={({ isActive }) => `
-                                flex items-center py-3 px-4 gap-3 mx-2 rounded-lg
-                                ${isActive
-                                    ? "bg-primary/10 text-primary font-medium border-r-4 md:border-r-[6px] border-primary"
-                                    : "hover:bg-gray-100/90"
-                                }`
-                            }
-                        >
-                            <i className={`${item.icon} w-4 h-4`}></i>
-                            <span className="md:block hidden">{item.name}</span>
-                        </NavLink>
-                    ))} */}
                 </aside>
 
                 {/* Main Content */}
@@ -127,7 +102,5 @@ const SellerLayout = () => {
         </div>
     );
 };
-
-
 
 export default SellerLayout;

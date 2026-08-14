@@ -1,11 +1,12 @@
 import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import React, { useEffect } from "react";
+import RequireRole from './routes/RequireRole';
 
 // Layouts
 import UserLayout from './layout/UserLayout';
 import SellerLayout from './pages/seller/SellerLayout';
 import { AppContextProvider } from './context/AppContext.jsx';
-import { SellerContextProvider } from './context/SellerContext.jsx';
+import { useSellerContext, SellerContextProvider } from './context/SellerContext.jsx';
 
 // User Pages
 import Home from './pages/Home';
@@ -50,17 +51,25 @@ import Terms from './pages/policy/Terms.jsx';
 import NotFound from './pages/NotFound';
 import Maintenance from './pages/Maintenance';
 
-// Redirect if seller already logged in
 const RedirectIfSellerLoggedIn = () => {
-  const token = localStorage.getItem("sellerToken");
-  return token ? <Navigate to="/seller/dashboard" replace /> : <Outlet />;
+  const { isSeller, authLoading } = useSellerContext();
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-500">Loading...</p>
+      </div>
+    );
+  }
+
+  return isSeller ? <Navigate to="/seller/dashboard" replace /> : <Outlet />;
 };
 
 
 
 
 const App = () => {
-  
+
   if (process.env.NODE_ENV === "production") {
     useEffect(() => {
 
@@ -145,25 +154,40 @@ const App = () => {
           <Route element={<AppContextProvider>
             <SellerLayout />
           </AppContextProvider>}>
+
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="add-book" element={<AddBook />} />
-            <Route path="add-book-category" element={<AddCategory />} />
-            <Route path="add-user" element={<AddUser />} />
-            <Route path="edit-book/:bookId" element={<AddBook />} />
-            <Route path="edit-user/:userId" element={<EditUser />} />
-            <Route path="book-list" element={<BookList />} />
-            <Route path="category-list" element={<BookCategoryList />} />
-            <Route path="user-list" element={<UserList />} />
-            <Route path="payments" element={<PaymentList />} />
-            <Route path="orders" element={<Orders />} />
-            <Route path="question-list" element={<QuestionList />} />
-            <Route path="add-question" element={<AddQuestion />} />
-            <Route path="edit-question/:questionId" element={<AddQuestion />} />
+
+            {/* Roles 3,4 can access */}
+            <Route element={<RequireRole allowedRoles={[3, 4]} />}>
+              <Route path="add-book" element={<AddBook />} />
+              <Route path="edit-book/:bookId" element={<AddBook />} />
+              <Route path="book-list" element={<BookList />} />
+              <Route path="add-book-category" element={<AddCategory />} />
+              <Route path="category-list" element={<BookCategoryList />} />
+              <Route path="orders" element={<Orders />} />
+            </Route>
+
+            {/* Role 2 access only */}
+            <Route element={<RequireRole allowedRoles={[2]} />}>              
+              <Route path="question-list" element={<QuestionList />} />
+              <Route path="add-question" element={<AddQuestion />} />
+              <Route path="edit-question/:questionId" element={<AddQuestion />} />
+            </Route>
+
+            {/* Superadmin Only (role 4) */}
+            <Route element={<RequireRole allowedRoles={[4]} />}>
+              <Route path="add-user" element={<AddUser />} />
+              <Route path="edit-user/:userId" element={<EditUser />} />
+              <Route path="user-list" element={<UserList />} />
+              <Route path="payments" element={<PaymentList />} />
+            </Route>
 
             {/* 404 for Seller Routes */}
             <Route path="*" element={<NotFound />} />
           </Route>
         </Route>
+
+
       </Route>
 
       {/* Global fallback for unmatched root paths */}

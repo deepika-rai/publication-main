@@ -3,16 +3,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-axios.interceptors.request.use((config) => {
-    const token =
-        localStorage.getItem("sellerToken")
 
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-
-    return config;
-});
 
 axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 axios.defaults.withCredentials = true;
@@ -25,10 +16,11 @@ export const AppContextProvider = ({ children }) => {
 
     const navigate = useNavigate();
     const [user, setUser] = useState(null)
+    const [authLoading, setAuthLoading] = useState(true);
     const [showUserLogin, setShowUserLogin] = useState(false)
     const [books, setBooks] = useState([])
     const [users, setUsers] = useState([])
-    const [token, setToken] = useState(localStorage.getItem("userToken") || null);
+    // const [token, setToken] = useState(localStorage.getItem("userToken") || null);
     const [homeBooks, setHomeBooks] = useState([])
     const [bookCategory, setBookCategory] = useState([]);
 
@@ -36,27 +28,21 @@ export const AppContextProvider = ({ children }) => {
     const [searchQuery, setSearchQuery] = useState({})
 
 
-
-    // Fetch User Auth Status , User Data and Cart Items
     const fetchUser = async () => {
         try {
-            console.log("Token in Cookies", req.cookies.token);
-            const token = req.cookies.token;
-
-            if (!token) {
-                setUser(null);
-                return;
-            }
-            const { data } = await axios.get('/api/user/is-auth'); // No manual headers
+            const { data } = await axios.get('/api/user/is-auth');
             if (data.success) {
                 setUser(data.user);
                 if (data.user.cartItems) {
                     setCartItems(data.user.cartItems);
                 }
-
+            } else {
+                setUser(null);
             }
         } catch (error) {
             setUser(null);
+        } finally {
+            setAuthLoading(false);
         }
     }
 
@@ -205,7 +191,7 @@ export const AppContextProvider = ({ children }) => {
 
     const value = {
         navigate,
-        showUserLogin, setShowUserLogin, token, setToken, users, currency, addToCart, updateCartItem, removeFromCart, cartItems, setCartItems, searchQuery, setSearchQuery, getCartAmount, getCartCount, fetchHomeBooks, homeBooks, axios, fetchBooks, books, fetchUsers, user, setUser, fetchBookCategory, bookCategory
+        showUserLogin, setShowUserLogin, users,authLoading, currency, addToCart, updateCartItem, removeFromCart, cartItems, setCartItems, searchQuery, setSearchQuery, getCartAmount, getCartCount, fetchHomeBooks, homeBooks, axios, fetchBooks, books, fetchUsers, user, setUser, fetchBookCategory, bookCategory
     }
 
     return <AppContext.Provider value={value}>
