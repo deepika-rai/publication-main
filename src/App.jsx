@@ -26,6 +26,8 @@ import Loading from './components/Loading';
 import SellerLogin from './components/seller/SellerLogin';
 import Dashboard from './pages/seller/Dashboard';
 import AddBook from './pages/seller/book/AddForm';
+import AddQuestion from './pages/seller/question/AddQuestion';
+import QuestionList from './pages/seller/question/QuestionList.jsx';
 import AddCategory from './pages/seller/category/AddForm';
 import AddUser from './pages/seller/user/AddForm';
 import BookList from './pages/seller/book/Lists';
@@ -154,6 +156,9 @@ const App = () => {
             <Route path="user-list" element={<UserList />} />
             <Route path="payments" element={<PaymentList />} />
             <Route path="orders" element={<Orders />} />
+            <Route path="question-list" element={<QuestionList />} />
+            <Route path="add-question" element={<AddQuestion />} />
+            <Route path="edit-question/:questionId" element={<AddQuestion />} />
 
             {/* 404 for Seller Routes */}
             <Route path="*" element={<NotFound />} />

@@ -39,6 +39,7 @@ const SellerLayout = () => {
         { name: "Dashboard", path: "/seller/dashboard", icon: 'fa fa-dashboard' },
         { name: "Book Management", path: "/seller/book-list", icon: 'fa fa-list-alt' },
         { name: "Category Management", path: "/seller/category-list", icon: 'fa fa-tags' },
+        { name: "Question Management", path: "/seller/question-list", icon: 'fa fa-tags' },
         { name: "User Management", path: "/seller/user-list", icon: 'fa fa-users' },
         { name: "Order Management", path: "/seller/orders", icon: 'fa fa-shopping-cart' },
         { name: "Payments", path: "/seller/payments", icon: 'fa fa-credit-card' },

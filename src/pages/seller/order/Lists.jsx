@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import ConfirmationDialog from "./ConfirmDialog"; 
+import ConfirmationDialog from "../../../components/ConfirmDialog"; 
 
 const OrderList = () => {
   const currency = "$";
