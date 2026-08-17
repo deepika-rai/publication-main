@@ -29,7 +29,7 @@ const SellerLogin = () => {
                 }
 
                 setIsSeller(true);
-                setSellerRole(data.user.role); // ye missing tha — is line ke bina sidebar/role-checks fail hote hain
+                setSellerRole(data.user.role); 
 
                 toast.success(data.message);
                 navigate('/seller/dashboard', { replace: true });

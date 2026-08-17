@@ -10,6 +10,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useSellerContext } from "../../context/SellerContext";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -21,6 +23,8 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
+  const { sellerRole } = useSellerContext();
+
   const [summary, setSummary] = useState({
     totalOrders: 120,
     totalRevenue: 45230.75,
@@ -41,7 +45,6 @@ const Dashboard = () => {
     { id: "ORD010", customer: "Neha Singh", amount: 110.0, date: "2025-06-12" },
   ];
 
-
   const bookOrderBarData = {
     labels: ["Dissertations", "Periodical", "MASI", "Theses", "Reports", "Monograph"],
     datasets: [
@@ -53,66 +56,86 @@ const Dashboard = () => {
     ],
   };
 
+  // Define which summary cards each role can see
+  const allSummaryCards = [
+    { key: "totalOrders", title: "Total Orders", value: summary.totalOrders, roles: [3, 4] },
+    { key: "totalRevenue", title: "Revenue", value: `$${summary.totalRevenue.toFixed(2)}`, roles: [4] },
+    { key: "totalUsers", title: "Users", value: summary.totalUsers, roles: [4] },
+    { key: "totalBooks", title: "Books", value: summary.totalBooks, roles: [3, 4] },
+  ];
+
+  const visibleCards = allSummaryCards.filter(card => card.roles.includes(sellerRole));
+
   return (
     <div className="flex-1">
       <div className="container mx-auto px-4 py-6">
         <h2 className="text-2xl mb-6" style={{ color: "#0000cc" }}>Dashboard</h2>
 
-        {/* Summary Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
-          {[{ title: "Total Orders", value: summary.totalOrders }, { title: "Revenue", value: `$${summary.totalRevenue.toFixed(2)}` }, { title: "Users", value: summary.totalUsers }, { title: "Books", value: summary.totalBooks }].map((item, index) => (
-            <div key={index} className="bg-white shadow hover:shadow-md transition-transform hover:scale-[1.02] rounded-2xl p-5">
-              <h3 className="text-sm text-gray-500">{item.title}</h3>
-              <p className="text-2xl font-bold text-gray-800">{item.value}</p>
-            </div>
-          ))}
-        </div>
+        {/* Summary Cards - role filtered */}
+        {visibleCards.length > 0 && (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+            {visibleCards.map((item) => (
+              <div key={item.key} className="bg-white shadow hover:shadow-md transition-transform hover:scale-[1.02] rounded-2xl p-5">
+                <h3 className="text-sm text-gray-500">{item.title}</h3>
+                <p className="text-2xl font-bold text-gray-800">{item.value}</p>
+              </div>
+            ))}
+          </div>
+        )}
 
-        {/* Book Category & Order Charts */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white p-4 shadow hover:shadow-md rounded-2xl flex flex-col items-center justify-center">
-            <h3 className="text-lg font-semibold mb-4">Book Distribution by Category</h3>
-            <div style={{ width: "200px", height: "200px" }}>
-              <Pie data={bookOrderBarData} options={{ plugins: { legend: { display: false } } }} />
+        {/* Charts - only for roles 3 & 4 (Book/Author related) */}
+        {[3, 4].includes(sellerRole) && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white p-4 shadow hover:shadow-md rounded-2xl flex flex-col items-center justify-center">
+              <h3 className="text-lg font-semibold mb-4">Book Distribution by Category</h3>
+              <div style={{ width: "200px", height: "200px" }}>
+                <Pie data={bookOrderBarData} options={{ plugins: { legend: { display: false } } }} />
+              </div>
+            </div>
+
+            <div className="bg-white p-4 shadow hover:shadow-md rounded-2xl">
+              <h3 className="text-lg font-semibold mb-4">Orders by Book</h3>
+              <Bar data={bookOrderBarData} />
             </div>
           </div>
+        )}
 
-          <div className="bg-white p-4 shadow hover:shadow-md rounded-2xl">
-            <h3 className="text-lg font-semibold mb-4">Orders by Book</h3>
-            <Bar data={bookOrderBarData} />
-          </div>
-        </div>
-
-        {/* Recent Orders */}
-        <div className="bg-white p-4 shadow hover:shadow-md rounded-2xl mt-8">
-          <h2 className="text-2xl mb-6" style={{ color: "#0aad0a" }}>
-       Recent Orders
-          </h2>
-          <div className="overflow-x-auto">
-              <div className="overflow-x-auto bg-white shadow border border-gray-200 rounded-lg">
-          <table className="min-w-full divide-y divide-gray-200 text-sm">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-4 py-3 text-left font-bold text-black uppercase">Order ID</th>
-                <th className="px-4 py-3 text-left font-bold text-black uppercase">Customer</th>
-                <th className="px-4 py-3 text-left font-bold text-black uppercase">Amount</th>
-                <th className="px-4 py-3 text-left font-bold text-black uppercase">Date</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-                {recentOrders.map((order, index) => (
-                  <tr key={index} className="hover:bg-gray-50">
-                    <td className="px-4 py-2 font-medium">{order.id}</td>
-                    <td className="px-4 py-2">{order.customer}</td>
-                    <td className="px-4 py-2">${order.amount.toFixed(2)}</td>
-                    <td className="px-4 py-2">{order.date}</td>
+        {/* Recent Orders - only for roles 3 & 4 */}
+        {[3, 4].includes(sellerRole) && (
+          <div className="bg-white p-4 shadow hover:shadow-md rounded-2xl mt-8">
+            <h2 className="text-2xl mb-6" style={{ color: "#0aad0a" }}>Recent Orders</h2>
+            <div className="overflow-x-auto bg-white shadow border border-gray-200 rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200 text-sm">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-4 py-3 text-left font-bold text-black uppercase">Order ID</th>
+                    <th className="px-4 py-3 text-left font-bold text-black uppercase">Customer</th>
+                    <th className="px-4 py-3 text-left font-bold text-black uppercase">Amount</th>
+                    <th className="px-4 py-3 text-left font-bold text-black uppercase">Date</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {recentOrders.map((order) => (
+                    <tr key={order.id} className="hover:bg-gray-50">
+                      <td className="px-4 py-2 font-medium">{order.id}</td>
+                      <td className="px-4 py-2">{order.customer}</td>
+                      <td className="px-4 py-2">${order.amount.toFixed(2)}</td>
+                      <td className="px-4 py-2">{order.date}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
+        )}
+
+        {/* Role 2 (Parliament/Question Admin) - separate widget */}
+        {sellerRole === 2 && (
+          <div className="bg-white p-6 shadow hover:shadow-md rounded-2xl">
+            <h3 className="text-lg font-semibold mb-2">Question Management Overview</h3>
+            <p className="text-gray-500 text-sm">Question stats here for Parliament Admin.</p>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

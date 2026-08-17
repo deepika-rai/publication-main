@@ -37,13 +37,13 @@ const ConfirmationDialog = ({
           <div className="flex justify-end space-x-3">
             <button
               onClick={onClose}
-              className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md"
+              className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md cursor-pointer"
             >
               {cancelText}
             </button>
             <button
               onClick={onConfirm}
-              className="px-4 py-2 text-white bg-red-600 hover:bg-red-700 rounded-md"
+              className="px-4 py-2 text-white bg-red-600 hover:bg-red-700 rounded-md cursor-pointer"
               autoFocus
             >
               {confirmText}

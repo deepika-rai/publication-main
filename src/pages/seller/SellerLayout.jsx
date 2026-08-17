@@ -17,7 +17,7 @@ const SellerLayout = () => {
     }
 
     const handleLogout = async () => {
-        await logoutSeller(); // context ke andar cookie clear + navigate handle ho raha hai
+        await logoutSeller(); 
         toast.success("Logged out successfully");
     };
 
@@ -39,7 +39,7 @@ const SellerLayout = () => {
         { name: "logout", action: handleLogout, icon: 'fa fa-sign-out', roles: [2, 3, 4] }
     ];
 
-    // sirf wahi links dikhao jo current role ke liye allowed hain
+
     const visibleLinks = sidebarLinks.filter(item => item.roles.includes(sellerRole));
 
     return (

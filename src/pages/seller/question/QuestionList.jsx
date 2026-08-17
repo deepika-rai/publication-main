@@ -248,7 +248,7 @@ const QuestionList = () => {
                   setCurrentPage(1);
                   fetchQuestions(1);
                 }}
-                className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-sm rounded-md transition-colors h-10 mt-5"
+                className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-sm rounded-md transition-colors h-10 mt-5 cursor-pointer"
               >
                 Search
               </button>
@@ -269,7 +269,7 @@ const QuestionList = () => {
                     fetchQuestions(1);
                   }, 0);
                 }}
-                className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-sm rounded-md transition-colors h-10 mt-5"
+                className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-sm rounded-md transition-colors h-10 mt-5 cursor-pointer"
               >
                 Clear
               </button>
@@ -380,7 +380,7 @@ const QuestionList = () => {
                         </Link>
                         <button
                           onClick={() => handleDelete(question.id)}
-                          className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-sm rounded-md transition-colors"
+                          className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-sm rounded-md transition-colors cursor-pointer"
                         >
                         <i className="fa fa-trash"></i>
                         </button>

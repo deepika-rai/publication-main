@@ -183,7 +183,7 @@ const QuestionList = () => {
                         </Link>
                         <button
                           onClick={() => handleDelete(question.id)}
-                          className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-sm rounded-md transition-colors"
+                          className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-sm rounded-md transition-colors cursor-pointer"
                         >
                           Delete
                         </button>
