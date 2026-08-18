@@ -179,7 +179,7 @@ const AddQuestion = () => {
           <form onSubmit={onSubmitHandler} className="space-y-6">
 
             <div>
-              <label htmlFor="questiondata" className="block text-sm font-medium text-gray-700 mb-1">Question</label>
+              <label htmlFor="questiondata" className="block text-sm font-medium text-gray-700 mb-1">Question <span className="text-red-500">*</span></label>
               <textarea
                 onChange={(e) => setQuestiondata(e.target.value)}
                 value={questiondata}
@@ -193,37 +193,7 @@ const AddQuestion = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
               <div>
-                <label htmlFor="quesNumber" className="block text-sm font-medium text-gray-700 mb-1">Ques Number</label>
-                <input
-                onChange={(e) => setQuesNumber(e.target.value)}
-                value={quesNumber}
-                id="quesNumber"
-                type="text"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
-              />
-                
-
-              </div>
-              <div>
-                <label htmlFor="section" className="block text-sm font-medium text-gray-700 mb-1">Section</label>
-                <select
-                  onChange={(e) => setSection(e.target.value)}
-                  value={section}
-                  id="section"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
-                  required
-                >
-                  <option value="">Select a Section</option>
-                  <option value="Website">Website</option>
-                  <option value="Conservation">Conservation</option>
-                  <option value="Monument">Monument</option>
-                </select>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-              <div>
-                <label htmlFor="sabha" className="block text-sm font-medium text-gray-700 mb-1">sabha</label>
+                <label htmlFor="sabha" className="block text-sm font-medium text-gray-700 mb-1">Parliament House <span className="text-red-500">*</span></label>
                 <select
                   onChange={(e) => setSabha(e.target.value)}
                   value={sabha}
@@ -231,13 +201,13 @@ const AddQuestion = () => {
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                   required
                 >
-                  <option value="">Select a Sabha</option>
+                  <option value="">Select Parliament House</option>
                   <option value="Lok">Lok Sabha</option>
                   <option value="Rajya">Rajya Sabha</option>
                 </select>
               </div>
               <div>
-                <label htmlFor="session" className="block text-sm font-medium text-gray-700 mb-1">Session</label>
+                <label htmlFor="session" className="block text-sm font-medium text-gray-700 mb-1">Parliament Session <span className="text-red-500">*</span></label>
                 <select
                   onChange={(e) => setSession(e.target.value)}
                   value={session}
@@ -245,7 +215,7 @@ const AddQuestion = () => {
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                   required
                 >
-                  <option value="">Select a Session</option>
+                  <option value="">Select a Parliament Session</option>
                   <option value="Winter">Winter</option>
                   <option value="Budget">Budget</option>
                   <option value="Monsoon">Monsoon</option>
@@ -254,12 +224,23 @@ const AddQuestion = () => {
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+              <div>
+                <label htmlFor="quesNumber" className="block text-sm font-medium text-gray-700 mb-1">Question Number</label>
+                <input
+                  onChange={(e) => setQuesNumber(e.target.value)}
+                  value={quesNumber}
+                  id="quesNumber"
+                  type="text"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                />
+              </div>
               <div>
                 <label
                   htmlFor="questionDate"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Date
+                  Answer Date <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="questionDate"
@@ -270,8 +251,13 @@ const AddQuestion = () => {
                   required
                 />
               </div>
+              
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              
               <div>
-                <label htmlFor="star" className="block text-sm font-medium text-gray-700 mb-1">Star</label>
+                <label htmlFor="star" className="block text-sm font-medium text-gray-700 mb-1">Starred <span className="text-red-500">*</span></label>
                 <select
                   onChange={(e) => setStar(e.target.value)}
                   value={star}
@@ -279,9 +265,24 @@ const AddQuestion = () => {
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                   required
                 >
-                  <option value="true">Yes</option>
-                  <option value="false">No</option>
+                  <option value="true">Starred</option>
+                  <option value="false">Unstarred</option>
 
+                </select>
+              </div>
+              <div>
+                <label htmlFor="section" className="block text-sm font-medium text-gray-700 mb-1">ASI Section  <span className="text-red-500">*</span></label>
+                <select
+                  onChange={(e) => setSection(e.target.value)}
+                  value={section}
+                  id="section"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                  required
+                >
+                  <option value="">Select a ASI Section</option>
+                  <option value="Website">Website</option>
+                  <option value="Conservation">Conservation</option>
+                  <option value="Monument">Monument</option>
                 </select>
               </div>
             </div>

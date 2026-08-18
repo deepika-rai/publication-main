@@ -150,7 +150,7 @@ const QuestionList = () => {
               />
             </div>
             <div>
-              <label htmlFor="section" className="block text-sm font-medium text-gray-700 mb-1">Section</label>
+              <label htmlFor="section" className="block text-sm font-medium text-gray-700 mb-1">ASI Section</label>
               <select
                 onChange={(e) => setSection(e.target.value)}
                 value={section}
@@ -158,14 +158,14 @@ const QuestionList = () => {
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                 required
               >
-                <option value="">Select a Section</option>
+                <option value="">Select a ASI Section</option>
                 <option value="Website">Website</option>
                 <option value="Conservation">Conservation</option>
                 <option value="Monument">Monument</option>
               </select>
             </div>
             <div>
-              <label htmlFor="sabha" className="block text-sm font-medium text-gray-700 mb-1">sabha</label>
+              <label htmlFor="sabha" className="block text-sm font-medium text-gray-700 mb-1">Parliament House</label>
               <select
                 onChange={(e) => setSabha(e.target.value)}
                 value={sabha}
@@ -173,13 +173,13 @@ const QuestionList = () => {
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                 required
               >
-                <option value="">Select a Sabha</option>
+                <option value="">Select a Parliament House</option>
                 <option value="Lok">Lok Sabha</option>
                 <option value="Rajya">Rajya Sabha</option>
               </select>
             </div>
             <div>
-              <label htmlFor="session" className="block text-sm font-medium text-gray-700 mb-1">Session</label>
+              <label htmlFor="session" className="block text-sm font-medium text-gray-700 mb-1">Parliament Session</label>
               <select
                 onChange={(e) => setSession(e.target.value)}
                 value={session}
@@ -187,7 +187,7 @@ const QuestionList = () => {
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                 required
               >
-                <option value="">Select a Session</option>
+                <option value="">Select a Parliament Session</option>
                 <option value="Winter">Winter</option>
                 <option value="Budget">Budget</option>
                 <option value="Monsoon">Monsoon</option>
@@ -195,7 +195,7 @@ const QuestionList = () => {
               </select>
             </div>
             <div>
-              <label htmlFor="star" className="block text-sm font-medium text-gray-700 mb-1">Star</label>
+              <label htmlFor="star" className="block text-sm font-medium text-gray-700 mb-1">Starred</label>
               <select
                 onChange={(e) => setStar(e.target.value)}
                 value={star}
@@ -203,9 +203,9 @@ const QuestionList = () => {
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                 required
               >
-                <option value="">Select a Star</option>
-                <option value="true">Yes</option>
-                <option value="false">No</option>
+                <option value="">Select a Starred</option>
+                <option value="true">Starred</option>
+                <option value="false">Unstarred</option>
 
               </select>
             </div>
@@ -289,25 +289,25 @@ const QuestionList = () => {
                     #
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">
-                    Ques No.
+                    Question No.
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">
                     Question
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">
-                    Section
+                    ASI Section
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">
-                    Session
+                    Parliament Session
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider hidden md:table-cell">
-                    Sabha
+                    Parliament House
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">
-                    star
+                    Starred
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">
-                    Date
+                    Answer Date
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">
                     Pdf

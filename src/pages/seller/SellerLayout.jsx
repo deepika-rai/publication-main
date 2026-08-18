@@ -35,7 +35,7 @@ const SellerLayout = () => {
 
         { name: "Question Management", path: "/seller/question-list", icon: 'fa fa-tags', roles: [2] },
         
-        { name: "Account Setting", path: "/seller/setting", icon: 'fa fa-cog', roles: [2, 3, 4] },
+        // { name: "Account Setting", path: "/seller/setting", icon: 'fa fa-cog', roles: [2, 3, 4] },
         { name: "logout", action: handleLogout, icon: 'fa fa-sign-out', roles: [2, 3, 4] }
     ];
 

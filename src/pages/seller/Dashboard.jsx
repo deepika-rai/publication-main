@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Bar, Line, Pie } from "react-chartjs-2";
+import { toast, Toaster } from 'react-hot-toast';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -23,13 +24,43 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
-  const { sellerRole } = useSellerContext();
+  const { axios, sellerRole } = useSellerContext();
+
+  const fetchQuestionsStats = async (page = 1) => {
+    try {
+      const { data } = await axios.get(
+        "/api/dashboard/questionStats");
+
+      if (data.success) {
+        setSummary({
+          totalQuestions: data.totalQuestions,
+          totalRajyaQuestions: data.totalRajyaQuestions,
+          totalLokQuestions: data.totalLokQuestions,
+          totalStarQuestions: data.totalStarQuestions,
+        });
+
+      } else {
+        toast.error(data.message);
+      }
+
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || error.message
+      );
+    }
+  };
+
+
 
   const [summary, setSummary] = useState({
     totalOrders: 120,
     totalRevenue: 45230.75,
     totalUsers: 87,
     totalBooks: 46,
+    totalQuestions: 0,
+    totalRajyaQuestions: 0,
+    totalLokQuestions: 0,
+    totalStarQuestions: 0,
   });
 
   const recentOrders = [
@@ -59,12 +90,20 @@ const Dashboard = () => {
   // Define which summary cards each role can see
   const allSummaryCards = [
     { key: "totalOrders", title: "Total Orders", value: summary.totalOrders, roles: [3, 4] },
-    { key: "totalRevenue", title: "Revenue", value: `$${summary.totalRevenue.toFixed(2)}`, roles: [4] },
+    { key: "totalRevenue", title: "Revenue", value: `$${summary.totalRevenue}`, roles: [4] },
     { key: "totalUsers", title: "Users", value: summary.totalUsers, roles: [4] },
-    { key: "totalBooks", title: "Books", value: summary.totalBooks, roles: [3, 4] },
+    { key: "totalBooks", title: "Books", value: summary.totalBooks, roles: [3,4] },
+    { key: "totalQuestions", title: "Total Questions", value: summary.totalQuestions, roles: [2] },
+    { key: "totalRajyaQuestions", title: "Total Rajya Questions", value: summary.totalRajyaQuestions, roles: [2] },
+    { key: "totalLokQuestions", title: "Total Lok Questions", value: summary.totalLokQuestions, roles: [2] },
+    { key: "totalStarQuestions", title: "Total Starred", value: summary.totalStarQuestions, roles: [2] },
   ];
 
   const visibleCards = allSummaryCards.filter(card => card.roles.includes(sellerRole));
+
+    useEffect(() => {
+      fetchQuestionsStats()
+    }, []);
 
   return (
     <div className="flex-1">
@@ -130,12 +169,12 @@ const Dashboard = () => {
         )}
 
         {/* Role 2 (Parliament/Question Admin) - separate widget */}
-        {sellerRole === 2 && (
+        {/* {sellerRole === 2 && (
           <div className="bg-white p-6 shadow hover:shadow-md rounded-2xl">
             <h3 className="text-lg font-semibold mb-2">Question Management Overview</h3>
             <p className="text-gray-500 text-sm">Question stats here for Parliament Admin.</p>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
