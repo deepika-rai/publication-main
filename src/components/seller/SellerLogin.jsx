@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useState, useRef } from 'react'
 import { useSellerContext } from '../../context/SellerContext'
 import { assets } from '../../assets/assets';
 import { Navigate } from "react-router-dom";
 import { toast, Toaster } from 'react-hot-toast';
+import ReCAPTCHA from "react-google-recaptcha";
 
 const SellerLogin = () => {
     const { navigate, axios, setIsSeller, isSeller, setSellerRole } = useSellerContext()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const recaptchaRef = useRef(null);
 
     if (isSeller) {
         return <Navigate to="/seller/dashboard" replace />;
@@ -16,28 +18,38 @@ const SellerLogin = () => {
     const onSubmitHandler = async (event) => {
         try {
             event.preventDefault();
+
+            const captchaToken = recaptchaRef.current?.getValue();
+            if (!captchaToken) {
+                toast.error("Please complete the captcha");
+                return;
+            }
+
             const { data } = await axios.post(
                 '/api/seller/login',
-                { email, password },
+                { email, password, captchaToken },
                 { withCredentials: true }
             )
 
             if (data.success) {
                 if (![2, 3, 4].includes(data.user.role)) {
                     toast.error("You are not authorized to access admin panel");
+                    recaptchaRef.current?.reset();
                     return;
                 }
 
                 setIsSeller(true);
-                setSellerRole(data.user.role); 
+                setSellerRole(data.user.role);
 
                 toast.success(data.message);
                 navigate('/seller/dashboard', { replace: true });
             } else {
                 toast.error(data.message)
+                recaptchaRef.current?.reset();
             }
         } catch (error) {
             toast.error(error.response?.data?.message || error.message)
+            recaptchaRef.current?.reset();
         }
     }
 
@@ -75,6 +87,13 @@ const SellerLogin = () => {
                             placeholder="Enter your password"
                             className="border border-gray-300 rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                             required
+                        />
+                    </div>
+
+                    <div className="flex justify-center">
+                        <ReCAPTCHA
+                            ref={recaptchaRef}
+                            sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
                         />
                     </div>
 
