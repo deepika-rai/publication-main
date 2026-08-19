@@ -231,7 +231,7 @@ const AddQuestion = () => {
                   onChange={(e) => setQuesNumber(e.target.value)}
                   value={quesNumber}
                   id="quesNumber"
-                  type="text"
+                  type="number"
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                 />
               </div>

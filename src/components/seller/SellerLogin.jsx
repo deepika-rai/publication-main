@@ -19,22 +19,22 @@ const SellerLogin = () => {
         try {
             event.preventDefault();
 
-            const captchaToken = recaptchaRef.current?.getValue();
-            if (!captchaToken) {
-                toast.error("Please complete the captcha");
-                return;
-            }
+            // const captchaToken = recaptchaRef.current?.getValue();
+            // if (!captchaToken) {
+            //     toast.error("Please complete the captcha");
+            //     return;
+            // }
 
             const { data } = await axios.post(
                 '/api/seller/login',
-                { email, password, captchaToken },
+                { email, password },
                 { withCredentials: true }
             )
 
             if (data.success) {
                 if (![2, 3, 4].includes(data.user.role)) {
                     toast.error("You are not authorized to access admin panel");
-                    recaptchaRef.current?.reset();
+                    // recaptchaRef.current?.reset();
                     return;
                 }
 
@@ -45,11 +45,11 @@ const SellerLogin = () => {
                 navigate('/seller/dashboard', { replace: true });
             } else {
                 toast.error(data.message)
-                recaptchaRef.current?.reset();
+                // recaptchaRef.current?.reset();
             }
         } catch (error) {
             toast.error(error.response?.data?.message || error.message)
-            recaptchaRef.current?.reset();
+            // recaptchaRef.current?.reset();
         }
     }
 
@@ -90,12 +90,12 @@ const SellerLogin = () => {
                         />
                     </div>
 
-                    <div className="flex justify-center">
+                    {/* <div className="flex justify-center">
                         <ReCAPTCHA
                             ref={recaptchaRef}
                             sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
                         />
-                    </div>
+                    </div> */}
 
                     <button
                         type="submit"
