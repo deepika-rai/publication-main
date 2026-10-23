@@ -4,6 +4,7 @@ import RequireRole from './routes/RequireRole';
 
 // Layouts
 import UserLayout from './layout/UserLayout';
+import LibraryLayout from './layout/LibraryLayout';
 import SellerLayout from './pages/seller/SellerLayout';
 import { AppContextProvider } from './context/AppContext.jsx';
 import { useSellerContext, SellerContextProvider } from './context/SellerContext.jsx';
@@ -23,11 +24,44 @@ import MyOrders from './pages/MyOrders';
 import MyBooks from './pages/MyBooks';
 import Loading from './components/Loading';
 
+//Library Pages
+import LibraryHome from './pages/LibraryHome';
+import Pricing from './pages/membership/Pricing';
+import Form from './pages/membership/Form';
+import Membership from './pages/library/Membership';
+import MembershipPlan from './pages/library/MembershipPlan.jsx';
+import Gallery from './pages/library/Gallery';
+import LibraryAbout from './pages/library/About';
+import LibraryContact from './pages/library/Contact';
+import LibraryBooks from './pages/library/Books';
+import Faqs from './pages/library/Faqs.jsx';
+import Services from './pages/library/Services.jsx';
+import Testimonials from './pages/library/Testimonials.jsx';
+import Events from './pages/library/Events.jsx';
+import News from './pages/library/News.jsx';
+import WhatsNew from './pages/library/WhatsNew.jsx';
+import Blogs from './pages/library/Blogs.jsx';
+import DGMessage from './pages/library/DGMessage.jsx';
+import DirectorMessage from './pages/library/DirectorMessage.jsx';
+import Rules from './pages/library/Rules.jsx';
+import DosAndDonts from './pages/library/DosAndDonts.jsx';
+import EventsAndActivities from './pages/library/EventsAndActivities.jsx';
+import PrivacyPolicy from './pages/library/PrivacyPolicy.jsx';
+import CopyrightPolicy from './pages/library/CopyrightPolicy.jsx';
+import HyperLinkPolicy from './pages/library/HyperLinkPolicy.jsx';
+import TermsAndConditions from './pages/library/TermsAndConditions.jsx';
+import QuickLinks from './pages/library/QuickLinks.jsx';
+import Disclaimer from './pages/library/Disclaimer.jsx';
+// import Rules from './pages/library/Rules.jsx';
+
+
+
 // Seller Pages
 import SellerLogin from './components/seller/SellerLogin';
 import Dashboard from './pages/seller/Dashboard';
 import AddBook from './pages/seller/book/AddForm';
 import AddQuestion from './pages/seller/question/AddQuestion';
+import ViewQuestion from './pages/seller/question/ViewQuestion';
 import QuestionList from './pages/seller/question/QuestionList.jsx';
 import AddCategory from './pages/seller/category/AddForm';
 import AddUser from './pages/seller/user/AddForm';
@@ -37,6 +71,7 @@ import EditUser from './pages/seller/user/EditForm';
 import PaymentList from './pages/seller/payment/Lists';
 import Orders from './pages/seller/order/Lists';
 import UserList from './pages/seller/user/Lists';
+import UpdatePassword from './pages/seller/UpdatePassword';
 
 // Route Guards
 import ProtectedSellerRoute from './routes/ProtectedSellerRoute';
@@ -96,6 +131,37 @@ const App = () => {
 
   return (
     <Routes>
+
+      {/* NEW LAYOUT FOR LIBRARY HOME PAGE */}
+      <Route element={<LibraryLayout />}>
+        <Route path="/libraryhome" element={<LibraryHome />} />
+        <Route path="/library/membership-form" element={<Form />} />
+        <Route path="/library/membership" element={<Membership />} />
+        <Route path="/library/membership-plan" element={<MembershipPlan />} />
+        <Route path="/library/membership-pricing" element={<Pricing />} />
+        <Route path="/library/gallery" element={<Gallery />} />
+        <Route path="/library/about"   element={<LibraryAbout />} />
+        <Route path="/library/contact" element={<LibraryContact />} />
+        <Route path="/library/faq" element={<Faqs />} />
+        <Route path="/library/services" element={<Services />} />
+        <Route path="/library/whats-new" element={<WhatsNew />} />
+        <Route path="/library/news" element={<News />} />
+        <Route path="/library/testimonials" element={<Testimonials />} />
+        <Route path="/library/blogs" element={<Blogs />} />
+        <Route path="/library/events-activities" element={<Events />} />
+        <Route path="/library/director-message" element={<DirectorMessage />} />
+        <Route path="/library/dg-message" element={<DGMessage />} />
+        <Route path="/library/rules" element={<Rules />} />
+        <Route path="/library/dos-and-donts" element={<DosAndDonts />} />
+        <Route path="/library/events-and-activities" element={<EventsAndActivities />} />
+        <Route path="/library/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/library/copyright-policy" element={<CopyrightPolicy />} />
+        <Route path="/library/hyperlink-policy" element={<HyperLinkPolicy />} />
+        <Route path="/library/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/library/quick-links" element={<QuickLinks />} />
+        <Route path="/library/disclaimer" element={<Disclaimer />} />
+        <Route path="/library/books"   element={<AppContextProvider><LibraryBooks /></AppContextProvider>} />
+      </Route>
 
       {/* User Layout + App Context */}
       <Route
@@ -157,8 +223,8 @@ const App = () => {
 
             <Route path="dashboard" element={<Dashboard />} />
 
-            {/* Roles 3,4 can access */}
-            <Route element={<RequireRole allowedRoles={[3, 4]} />}>
+            {/* Roles 4,5 can access */}
+            <Route element={<RequireRole allowedRoles={[4, 5]} />}>
               <Route path="add-book" element={<AddBook />} />
               <Route path="edit-book/:bookId" element={<AddBook />} />
               <Route path="book-list" element={<BookList />} />
@@ -167,15 +233,20 @@ const App = () => {
               <Route path="orders" element={<Orders />} />
             </Route>
 
-            {/* Role 2 access only */}
-            <Route element={<RequireRole allowedRoles={[2]} />}>              
+            {/* Role 2, 3 access only */}
+            <Route element={<RequireRole allowedRoles={[2,3]} />}>              
               <Route path="question-list" element={<QuestionList />} />
               <Route path="add-question" element={<AddQuestion />} />
               <Route path="edit-question/:questionId" element={<AddQuestion />} />
+              <Route path="view-question/:questionId" element={<ViewQuestion />} />
+            </Route>
+            {/* Role 2 access only */}
+            <Route element={<RequireRole allowedRoles={[2]} />}>              
+              <Route path="update-password" element={<UpdatePassword />} />
             </Route>
 
-            {/* Superadmin Only (role 4) */}
-            <Route element={<RequireRole allowedRoles={[4]} />}>
+            {/* Superadmin Only (role 5) */}
+            <Route element={<RequireRole allowedRoles={[5]} />}>
               <Route path="add-user" element={<AddUser />} />
               <Route path="edit-user/:userId" element={<EditUser />} />
               <Route path="user-list" element={<UserList />} />

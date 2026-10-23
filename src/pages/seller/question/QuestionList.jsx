@@ -7,7 +7,7 @@ import { assets } from "../../../assets/assets";
 const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 const QuestionList = () => {
-  const { axios } = useSellerContext();
+  const { axios, sellerRole } = useSellerContext();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [questionToDelete, setQuestionToDelete] = useState(null);
   const [questions, setQuestions] = useState([])
@@ -159,9 +159,24 @@ const QuestionList = () => {
                 required
               >
                 <option value="">Select a ASI Section</option>
-                <option value="Website">Website</option>
-                <option value="Conservation">Conservation</option>
-                <option value="Monument">Monument</option>
+                <option value="Archive">Archive</option>
+                  <option value="Admin">Admin</option>
+                  <option value="Antiquity">Antiquity</option>
+                  <option value="B&A">B&amp;A</option>
+                  <option value="Conservation">Conservation</option>
+                  <option value="EE">EE</option>
+                  <option value="IOA">IOA</option>
+                  <option value="Media">Media</option>
+                  <option value="Monument">Monument</option>
+                  <option value="Museum">Museum</option>
+                  <option value="NCF">NCF</option>
+                  <option value="NMMA">NMMA</option>
+                  <option value="Other">Other</option>
+                  <option value="Publication">Publication</option>
+                  <option value="Science">Science</option>
+                  <option value="UAW">UAW</option>
+                  <option value="Website">Website</option>
+                  <option value="World Heritage">World Heritage</option>
               </select>
             </div>
             <div>
@@ -292,7 +307,7 @@ const QuestionList = () => {
                     Question No.
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">
-                    Question
+                    Question Subject
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-bold text-black uppercase tracking-wider">
                     ASI Section
@@ -328,7 +343,7 @@ const QuestionList = () => {
                         {question.quesNumber}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-6 py-4 w-[250px] max-w-[600px]">
                       <div className="text-sm font-medium text-gray-900">
                         {question.question}
                       </div>
@@ -372,55 +387,67 @@ const QuestionList = () => {
                     <td className="px-6 py-4 whitespace-nowrap hidden md:table-cell">
                       <div className="flex space-x-2">
                         <Link
-                          to={`/seller/edit-question/${question.id}`}
-                          className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-sm rounded-md transition-colors"
+                          to={`/seller/view-question/${question.id}`}
+                          className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-md transition-colors"
 
                         >
-                          <i className="fa fa-pencil"></i>
+                          <i className="fa fa-eye"></i>
                         </Link>
-                        <button
-                          onClick={() => handleDelete(question.id)}
-                          className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-sm rounded-md transition-colors cursor-pointer"
-                        >
-                        <i className="fa fa-trash"></i>
-                        </button>
+
+                        {[2].includes(sellerRole) && (
+                          <>
+                            <Link
+                              to={`/seller/edit-question/${question.id}`}
+                              className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-sm rounded-md transition-colors"
+                            >
+                              <i className="fa fa-pencil"></i>
+                            </Link>
+
+                            <button
+                              onClick={() => handleDelete(question.id)}
+                              className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-sm rounded-md transition-colors cursor-pointer"
+                            >
+                              <i className="fa fa-trash"></i>
+                            </button>
+                          </>
+                        )}
                       </div>
                     </td>
                   </tr>
                 ))}
               </tbody>{questions.length > itemsPerPage && (
-            <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
-              <div className="text-sm text-gray-700">
-                Showing{" "}
-                <span className="font-medium">{indexOfFirstItem + 1}</span> to{" "}
-                <span className="font-medium">
-                  {Math.min(indexOfLastItem, questions.length)}
-                </span>{" "}
-                of <span className="font-medium">{questions.length}</span>{" "}
-                questions
-              </div>
-              <div className="flex space-x-2">
-                <button
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.max(prev - 1, 1))
-                  }
-                  disabled={currentPage === 1}
-                  className="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Previous
-                </button>
-                <button
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                  }
-                  disabled={currentPage === totalPages}
-                  className="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Next
-                </button>
-              </div>
-            </div>
-          )}
+                <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
+                  <div className="text-sm text-gray-700">
+                    Showing{" "}
+                    <span className="font-medium">{indexOfFirstItem + 1}</span> to{" "}
+                    <span className="font-medium">
+                      {Math.min(indexOfLastItem, questions.length)}
+                    </span>{" "}
+                    of <span className="font-medium">{questions.length}</span>{" "}
+                    questions
+                  </div>
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.max(prev - 1, 1))
+                      }
+                      disabled={currentPage === 1}
+                      className="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                      }
+                      disabled={currentPage === totalPages}
+                      className="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              )}
             </table>
           </div>
 

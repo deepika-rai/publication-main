@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-
-
 axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 axios.defaults.withCredentials = true;
 
@@ -20,7 +18,6 @@ export const AppContextProvider = ({ children }) => {
     const [showUserLogin, setShowUserLogin] = useState(false)
     const [books, setBooks] = useState([])
     const [users, setUsers] = useState([])
-    // const [token, setToken] = useState(localStorage.getItem("userToken") || null);
     const [homeBooks, setHomeBooks] = useState([])
     const [bookCategory, setBookCategory] = useState([]);
 
@@ -191,7 +188,7 @@ export const AppContextProvider = ({ children }) => {
 
     const value = {
         navigate,
-        showUserLogin, setShowUserLogin, users,authLoading, currency, addToCart, updateCartItem, removeFromCart, cartItems, setCartItems, searchQuery, setSearchQuery, getCartAmount, getCartCount, fetchHomeBooks, homeBooks, axios, fetchBooks, books, fetchUsers, user, setUser, fetchBookCategory, bookCategory
+        showUserLogin, setShowUserLogin, users, authLoading, currency, addToCart, updateCartItem, removeFromCart, cartItems, setCartItems, searchQuery, setSearchQuery, getCartAmount, getCartCount, fetchHomeBooks, homeBooks, axios, fetchBooks, books, fetchUsers, user, setUser, fetchBookCategory, bookCategory
     }
 
     return <AppContext.Provider value={value}>

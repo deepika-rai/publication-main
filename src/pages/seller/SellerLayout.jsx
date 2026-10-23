@@ -21,22 +21,24 @@ const SellerLayout = () => {
         toast.success("Logged out successfully");
     };
 
-    // role name for header greeting
-    const ROLE_NAMES = { 2: "Parliament Admin", 3: "Author Admin", 4: "Super Admin" };
+    // role name for header
+    // Roles (2 = parliament superadmin, 3 = parliament admin (common user), 4 = author admin, 5 = superadmin)
+    const ROLE_NAMES = { 2: "Parliament Admin", 3: "Parliament User", 4: "Author Admin", 4: "Super Admin" };
 
     const sidebarLinks = [
-        { name: "Dashboard", path: "/seller/dashboard", icon: 'fa fa-dashboard', roles: [2, 3, 4] },
+        { name: "Dashboard", path: "/seller/dashboard", icon: 'fa fa-dashboard', roles: [2, 3, 4, 5] },
 
-        { name: "Book Management", path: "/seller/book-list", icon: 'fa fa-list-alt', roles: [3, 4] },
-        { name: "Category Management", path: "/seller/category-list", icon: 'fa fa-tags', roles: [3, 4] },
-        { name: "Order Management", path: "/seller/orders", icon: 'fa fa-shopping-cart', roles: [3, 4] },
-        { name: "User Management", path: "/seller/user-list", icon: 'fa fa-users', roles: [4] },
-        { name: "Payments", path: "/seller/payments", icon: 'fa fa-credit-card', roles: [4] },
+        { name: "Book Management", path: "/seller/book-list", icon: 'fa fa-list-alt', roles: [4, 5] },
+        { name: "Category Management", path: "/seller/category-list", icon: 'fa fa-tags', roles: [4, 5] },
+        { name: "Order Management", path: "/seller/orders", icon: 'fa fa-shopping-cart', roles: [4, 5] },
+        { name: "User Management", path: "/seller/user-list", icon: 'fa fa-users', roles: [5] },
+        { name: "Payments", path: "/seller/payments", icon: 'fa fa-credit-card', roles: [5] },
 
-        { name: "Question Management", path: "/seller/question-list", icon: 'fa fa-tags', roles: [2] },
-        
-        // { name: "Account Setting", path: "/seller/setting", icon: 'fa fa-cog', roles: [2, 3, 4] },
-        { name: "logout", action: handleLogout, icon: 'fa fa-sign-out', roles: [2, 3, 4] }
+        { name: "Question Management", path: "/seller/question-list", icon: 'fa fa-tags', roles: [2, 3] },
+
+        { name: "Change Password", path: "/seller/update-password", icon: 'fa fa-key', roles: [2, 4] },        
+        // { name: "Account Setting", path: "/seller/setting", icon: 'fa fa-cog', roles: [2, 3, 4, 5] },
+        { name: "logout", action: handleLogout, icon: 'fa fa-sign-out', roles: [2, 3, 4, 5] }
     ];
 
 

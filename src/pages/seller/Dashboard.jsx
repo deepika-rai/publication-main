@@ -88,15 +88,17 @@ const Dashboard = () => {
   };
 
   // Define which summary cards each role can see
+  // Roles (2 = parliament superadmin, 3 = parliament admin (common user), 4 = author admin, 5 = superadmin)
   const allSummaryCards = [
-    { key: "totalOrders", title: "Total Orders", value: summary.totalOrders, roles: [3, 4] },
-    { key: "totalRevenue", title: "Revenue", value: `$${summary.totalRevenue}`, roles: [4] },
-    { key: "totalUsers", title: "Users", value: summary.totalUsers, roles: [4] },
-    { key: "totalBooks", title: "Books", value: summary.totalBooks, roles: [3,4] },
-    { key: "totalQuestions", title: "Total Questions", value: summary.totalQuestions, roles: [2] },
-    { key: "totalRajyaQuestions", title: "Total Rajya Questions", value: summary.totalRajyaQuestions, roles: [2] },
-    { key: "totalLokQuestions", title: "Total Lok Questions", value: summary.totalLokQuestions, roles: [2] },
-    { key: "totalStarQuestions", title: "Total Starred", value: summary.totalStarQuestions, roles: [2] },
+    { key: "totalOrders", title: "Total Orders", value: summary.totalOrders, roles: [4,5] },
+    { key: "totalRevenue", title: "Revenue", value: `$${summary.totalRevenue}`, roles: [5] },
+    { key: "totalUsers", title: "Users", value: summary.totalUsers, roles: [5] },    
+    { key: "totalBooks", title: "Books", value: summary.totalBooks, roles: [4,5] },
+
+    { key: "totalQuestions", title: "Total Questions", value: summary.totalQuestions, roles: [2,3] },
+    { key: "totalRajyaQuestions", title: "Total Rajya Questions", value: summary.totalRajyaQuestions, roles: [2,3] },
+    { key: "totalLokQuestions", title: "Total Lok Questions", value: summary.totalLokQuestions, roles: [2,3] },
+    { key: "totalStarQuestions", title: "Total Starred", value: summary.totalStarQuestions, roles: [2,3] },
   ];
 
   const visibleCards = allSummaryCards.filter(card => card.roles.includes(sellerRole));
@@ -122,8 +124,8 @@ const Dashboard = () => {
           </div>
         )}
 
-        {/* Charts - only for roles 3 & 4 (Book/Author related) */}
-        {[3, 4].includes(sellerRole) && (
+        {/* Charts - only for roles 4 & 5 (Book/Author related) */}
+        {[4,5].includes(sellerRole) && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white p-4 shadow hover:shadow-md rounded-2xl flex flex-col items-center justify-center">
               <h3 className="text-lg font-semibold mb-4">Book Distribution by Category</h3>
@@ -139,8 +141,8 @@ const Dashboard = () => {
           </div>
         )}
 
-        {/* Recent Orders - only for roles 3 & 4 */}
-        {[3, 4].includes(sellerRole) && (
+        {/* Recent Orders - only for roles 4 & 5 */}
+        {[4, 5].includes(sellerRole) && (
           <div className="bg-white p-4 shadow hover:shadow-md rounded-2xl mt-8">
             <h2 className="text-2xl mb-6" style={{ color: "#0aad0a" }}>Recent Orders</h2>
             <div className="overflow-x-auto bg-white shadow border border-gray-200 rounded-lg">

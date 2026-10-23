@@ -1,15 +1,16 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { useSellerContext } from '../../context/SellerContext'
 import { assets } from '../../assets/assets';
 import { Navigate } from "react-router-dom";
 import { toast, Toaster } from 'react-hot-toast';
-import ReCAPTCHA from "react-google-recaptcha";
+import CaptchaBox from '../../components/CaptchaBox'; 
 
 const SellerLogin = () => {
     const { navigate, axios, setIsSeller, isSeller, setSellerRole } = useSellerContext()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const recaptchaRef = useRef(null);
+    const [captchaCode, setCaptchaCode] = useState("");
+    const [captchaInput, setCaptchaInput] = useState("");
 
     if (isSeller) {
         return <Navigate to="/seller/dashboard" replace />;
@@ -19,11 +20,10 @@ const SellerLogin = () => {
         try {
             event.preventDefault();
 
-            // const captchaToken = recaptchaRef.current?.getValue();
-            // if (!captchaToken) {
-            //     toast.error("Please complete the captcha");
-            //     return;
-            // }
+            if (captchaInput.trim().toUpperCase() !== captchaCode.toUpperCase()) {
+                toast.error("Captcha does not match");
+                return;
+            }
 
             const { data } = await axios.post(
                 '/api/seller/login',
@@ -34,7 +34,6 @@ const SellerLogin = () => {
             if (data.success) {
                 if (![2, 3, 4].includes(data.user.role)) {
                     toast.error("You are not authorized to access admin panel");
-                    // recaptchaRef.current?.reset();
                     return;
                 }
 
@@ -45,11 +44,9 @@ const SellerLogin = () => {
                 navigate('/seller/dashboard', { replace: true });
             } else {
                 toast.error(data.message)
-                // recaptchaRef.current?.reset();
             }
         } catch (error) {
             toast.error(error.response?.data?.message || error.message)
-            // recaptchaRef.current?.reset();
         }
     }
 
@@ -90,12 +87,20 @@ const SellerLogin = () => {
                         />
                     </div>
 
-                    {/* <div className="flex justify-center">
-                        <ReCAPTCHA
-                            ref={recaptchaRef}
-                            sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
-                        />
-                    </div> */}
+                    <div className="w-full">
+                        <label className='block text-gray-700 mb-1'>Enter the code shown</label>
+                        <div className="flex items-center gap-3">
+                            <CaptchaBox onCodeChange={setCaptchaCode} />
+                            <input
+                                onChange={(e) => setCaptchaInput(e.target.value)}
+                                value={captchaInput}
+                                type="text"
+                                placeholder="Enter code"
+                                className="border border-gray-300 rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                                required
+                            />
+                        </div>
+                    </div>
 
                     <button
                         type="submit"
@@ -103,7 +108,6 @@ const SellerLogin = () => {
                     >
                         Login
                     </button>
-                    <p><a href="/">Back to Home</a></p>
                 </div>
             </form>
         </div>

@@ -25,7 +25,6 @@ const About = () => {
         <div className="flex flex-col gap-6">
           <div>
             <p className="text-gray-700 mb-3">
-
               Publications of the ASI was started by A. Cunningham, the first Director General, who along with his associates, documented vigorously all the results of their tour from1862-63 onwards. In 1874, a new series entitled 'New Imperial Series' was launched which continued upto 1933 containing exhaustive research on antiquarian remains.
             </p>
             <p className="text-gray-700 mb-3">

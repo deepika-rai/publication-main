@@ -14,6 +14,7 @@ export const SellerContextProvider = ({ children }) => {
     const navigate = useNavigate();
     const [isSeller, setIsSeller] = useState(false)
     const [sellerRole, setSellerRole] = useState(null); // 2, 3, 4 - role-based UI ke liye
+    const [sellerId, setSellerId] = useState(null); 
     const [authLoading, setAuthLoading] = useState(true); // pehli baar auth-check hone tak
 
     // Fetch All Books
@@ -36,6 +37,7 @@ export const SellerContextProvider = ({ children }) => {
             if (data.success) {
                 setIsSeller(true);
                 setSellerRole(data.user.role);
+                setSellerId(data.user.id);
             } else {
                 setIsSeller(false);
                 setSellerRole(null);
@@ -70,6 +72,7 @@ export const SellerContextProvider = ({ children }) => {
     const value = {
         navigate, currency, setIsSeller, isSeller,
         sellerRole, setSellerRole,
+        sellerId,
         authLoading,
         axios, books, fetchBooks,
         logoutSeller

@@ -11,6 +11,7 @@ const AddQuestion = () => {
   const navigate = useNavigate();
   const { questionId } = useParams();
   const [questiondata, setQuestiondata] = useState('');
+  const [hindiQuestiondata, setHindiQuestiondata] = useState('');
   const [quesNumber, setQuesNumber] = useState('');
   const [section, setSection] = useState('');
   const [sabha, setSabha] = useState([]);
@@ -19,6 +20,7 @@ const AddQuestion = () => {
   const [star, setStar] = useState(false);
   const [answer, setAnswer] = useState('');
   const [pdf, setPdf] = useState(null);
+  const [hindiPdf, setHindiPdf] = useState(null);
   const { axios } = useSellerContext();
 
   const onSubmitHandler = async (event) => {
@@ -28,6 +30,7 @@ const AddQuestion = () => {
         const questionData = {
           id: questionId,
           question: questiondata,
+          questionHindi: hindiQuestiondata,
           quesNumber,
           section,
           sabha,
@@ -49,6 +52,10 @@ const AddQuestion = () => {
           formData.append("bookPdf", pdf);
         }
 
+        if (hindiPdf instanceof File) {
+          formData.append("hindiBookPdf", hindiPdf);
+        }
+
         const { data } = await axios.put(
           "/api/question/updateQuestion",
           formData
@@ -68,6 +75,7 @@ const AddQuestion = () => {
         event.preventDefault();
         const questionData = {
           question: questiondata,
+          questionHindi: hindiQuestiondata,
           quesNumber,
           section,
           sabha,
@@ -86,6 +94,10 @@ const AddQuestion = () => {
 
         if (pdf instanceof File) {
           formData.append("bookPdf", pdf);
+        }
+
+        if (hindiPdf instanceof File) {
+          formData.append("hindiBookPdf", hindiPdf);
         }
 
         const { data } = await axios.post(
@@ -122,12 +134,16 @@ const AddQuestion = () => {
       const { data } = await axios.get(`/api/question/${questionId}`)
       if (data.success) {
         setQuestiondata(data.question.question);
+        setHindiQuestiondata(data.question.questionHindi);
+        setQuesNumber(data.question.quesNumber);
+        setSection(data.question.section)
         setSabha(data.question.sabha);
         setSession(data.question.session);
         setQuestionDate(formatDate(data.question.questionDate));
         setStar(data.question.star);
         setAnswer(data.question.answer);
         setPdf(data.question.pdf);
+        setHindiPdf(data.question.pdfHindi);
       }
     } catch (error) {
       toast.error('Failed to fetch question data')
@@ -139,6 +155,18 @@ const AddQuestion = () => {
       const file = e.target.files[0];
       if (!file) return;
       setPdf(file);
+
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to set PDF");
+    }
+  };
+
+  const handleHindiPdfChange = async (e) => {
+    try {
+      const file = e.target.files[0];
+      if (!file) return;
+      setHindiPdf(file);
 
     } catch (err) {
       console.error(err);
@@ -179,7 +207,7 @@ const AddQuestion = () => {
           <form onSubmit={onSubmitHandler} className="space-y-6">
 
             <div>
-              <label htmlFor="questiondata" className="block text-sm font-medium text-gray-700 mb-1">Question <span className="text-red-500">*</span></label>
+              <label htmlFor="questiondata" className="block text-md font-medium text-gray-700 mb-1">Question <span className="text-red-500">*</span></label>
               <textarea
                 onChange={(e) => setQuestiondata(e.target.value)}
                 value={questiondata}
@@ -190,10 +218,21 @@ const AddQuestion = () => {
                 required
               ></textarea>
             </div>
+            <div>
+              <label htmlFor="hindiQuestiondata" className="block text-md font-medium text-gray-700 mb-1">हिंदी प्रश्न </label>
+              <textarea
+                onChange={(e) => setHindiQuestiondata(e.target.value)}
+                value={hindiQuestiondata}
+                id="hindiQuestiondata"
+                rows={4}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition resize-none"
+                placeholder="Enter Hindi Question"
+              ></textarea>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
               <div>
-                <label htmlFor="sabha" className="block text-sm font-medium text-gray-700 mb-1">Parliament House <span className="text-red-500">*</span></label>
+                <label htmlFor="sabha" className="block text-md font-medium text-gray-700 mb-1">Parliament House <span className="text-red-500">*</span></label>
                 <select
                   onChange={(e) => setSabha(e.target.value)}
                   value={sabha}
@@ -207,7 +246,7 @@ const AddQuestion = () => {
                 </select>
               </div>
               <div>
-                <label htmlFor="session" className="block text-sm font-medium text-gray-700 mb-1">Parliament Session <span className="text-red-500">*</span></label>
+                <label htmlFor="session" className="block text-md font-medium text-gray-700 mb-1">Parliament Session <span className="text-red-500">*</span></label>
                 <select
                   onChange={(e) => setSession(e.target.value)}
                   value={session}
@@ -226,7 +265,7 @@ const AddQuestion = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
               <div>
-                <label htmlFor="quesNumber" className="block text-sm font-medium text-gray-700 mb-1">Question Number</label>
+                <label htmlFor="quesNumber" className="block text-md font-medium text-gray-700 mb-1">Question Number</label>
                 <input
                   onChange={(e) => setQuesNumber(e.target.value)}
                   value={quesNumber}
@@ -238,7 +277,7 @@ const AddQuestion = () => {
               <div>
                 <label
                   htmlFor="questionDate"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-md font-medium text-gray-700 mb-1"
                 >
                   Answer Date <span className="text-red-500">*</span>
                 </label>
@@ -251,13 +290,13 @@ const AddQuestion = () => {
                   required
                 />
               </div>
-              
+
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              
+
               <div>
-                <label htmlFor="star" className="block text-sm font-medium text-gray-700 mb-1">Starred <span className="text-red-500">*</span></label>
+                <label htmlFor="star" className="block text-md font-medium text-gray-700 mb-1">Starred <span className="text-red-500">*</span></label>
                 <select
                   onChange={(e) => setStar(e.target.value)}
                   value={star}
@@ -271,7 +310,7 @@ const AddQuestion = () => {
                 </select>
               </div>
               <div>
-                <label htmlFor="section" className="block text-sm font-medium text-gray-700 mb-1">ASI Section  <span className="text-red-500">*</span></label>
+                <label htmlFor="section" className="block text-md font-medium text-gray-700 mb-1">ASI Section  <span className="text-red-500">*</span></label>
                 <select
                   onChange={(e) => setSection(e.target.value)}
                   value={section}
@@ -279,36 +318,76 @@ const AddQuestion = () => {
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
                   required
                 >
-                  <option value="">Select a ASI Section</option>
-                  <option value="Website">Website</option>
+                  <option value="">Select an ASI Section</option>
+                  <option value="Archive">Archive</option>
+                  <option value="Admin">Admin</option>
+                  <option value="Antiquity">Antiquity</option>
+                  <option value="B&A">B&amp;A</option>
                   <option value="Conservation">Conservation</option>
+                  <option value="EE">EE</option>
+                  <option value="IOA">IOA</option>
+                  <option value="Media">Media</option>
                   <option value="Monument">Monument</option>
+                  <option value="Museum">Museum</option>
+                  <option value="NCF">NCF</option>
+                  <option value="NMMA">NMMA</option>
+                  <option value="Other">Other</option>
+                  <option value="Publication">Publication</option>
+                  <option value="Science">Science</option>
+                  <option value="UAW">UAW</option>
+                  <option value="Website">Website</option>
+                  <option value="World Heritage">World Heritage</option>
+
                 </select>
               </div>
             </div>
 
-            <div>
-              <label htmlFor="book-pdf" className="block text-sm font-medium text-gray-700 mb-1">Upload Pdf</label>
-              <input
-                onChange={handlePdfChange}
-                id="book-pdf"
-                type="file"
-                accept="application/pdf"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="book-pdf" className="block text-md font-medium text-gray-700 mb-1">Upload English Pdf</label>
+                <input
+                  onChange={handlePdfChange}
+                  id="book-pdf"
+                  type="file"
+                  accept="application/pdf"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                />
 
-              {pdf && typeof pdf === "string" && (
-                <a
-                  href={`${baseURL}${pdf}`}
-                  target="_blank"
-                  className="text-blue-500 text-sm mt-1 block"
-                >
-                  View Existing PDF
-                </a>
-              )}
+                {pdf && typeof pdf === "string" && (
+                  <a
+                    href={`${baseURL}${pdf}`}
+                    target="_blank"
+                    className="text-blue-500 text-md mt-1 block"
+                  >
+                    View Existing PDF
+                  </a>
+                )}
+              </div>
+              <div>
+                <label htmlFor="hindi-book-pdf" className="block text-md font-medium text-gray-700 mb-1">Upload Hindi Pdf</label>
+                <input
+                  onChange={handleHindiPdfChange}
+                  id="hindi-book-pdf"
+                  type="file"
+                  accept="application/pdf"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                />
+
+                {hindiPdf && typeof hindiPdf === "string" && (
+                  <a
+                    href={`${baseURL}${hindiPdf}`}
+                    target="_blank"
+                    className="text-blue-500 text-md mt-1 block"
+                  >
+                    View Existing PDF
+                  </a>
+                )}
+              </div>
             </div>
+
+
             <div>
-              <label htmlFor="answer" className="block text-sm font-medium text-gray-700 mb-1">Answer</label>
+              <label htmlFor="answer" className="block text-md font-medium text-gray-700 mb-1">Answer</label>
               <textarea
                 onChange={(e) => setAnswer(e.target.value)}
                 value={answer}
