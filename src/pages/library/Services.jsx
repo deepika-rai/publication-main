@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { Users, Library, BookOpen, ClipboardList, Copy, Printer, ScanLine, BookOpenCheck, ShieldCheck, Ban, Lock, Scale, Info } from "lucide-react";
 import { Link } from 'react-router-dom';
 
-import { Copy, Printer, ScanLine, BookOpenCheck, ShieldCheck, Ban, Lock, Scale, Info } from "lucide-react";
 
 const BRAND = "#E2691E";
 
@@ -18,6 +18,13 @@ const CONDITIONS = [
   { icon: Lock, text: "Rare books, manuscripts, fragile or damaged material, maps, photographs and specially protected collections need specific permission to reproduce." },
   { icon: Scale, text: "All reproduction is subject to applicable copyright and intellectual property provisions." },
   { icon: Ban, text: "Reprographic services cannot be used for commercial purposes." },
+];
+
+const FEATURES = [
+  { icon: Users, label: "Reference and Research Assistance", text: "Assistance is provided to users in quickly locating relevant books, journals, reference works, reports, and other information resources available in the library." },
+  { icon: ClipboardList, label: "Information Retrieval and Bibliographic Assistance", text: "Users may seek guidance in identifying relevant literature, bibliographic references, and research materials related to their areas of interest."},
+  { icon: Library, label: "Library Catalogue Assistance", text: "Guidance is provided in searching the library catalogue to identify and locate books and other available resources." },
+  { icon: BookOpen, label: "Subject-Based Information Support", text: "The Library assists researchers, students, academicians, and other users in identifying and accessing information resources relating to archaeology, ancient and medieval Indian history, art and culture, monuments, architecture, epigraphy, numismatics, and allied subjects through appropriate subject-based information retrieval tools and bibliographic resources." }, 
 ];
 
 function SectionHeading({ children }) {
@@ -81,7 +88,37 @@ const Services = () => {
       {/* ── Services ── */}
       <div className="relative max-w-6xl mx-auto px-4 py-16">
         <div className="space-y-14">
-          {/* ── Charges ── */}
+          <section>
+            <SectionHeading>Reference Services in CAL</SectionHeading>
+            <p className="text-[14px] text-gray-600 leading-relaxed mb-2">
+              The Central Archaeological Library provides Reference Services to facilitate research, promote learning, and assist users in accessing relevant and reliable information resources in the fields of archaeology, Indian history, art, culture, architecture, and allied disciplines.
+            </p>
+            <p className="text-[14px] text-gray-600 leading-relaxed mb-4">The service aims to guide users in identifying, locating, and using the library's information resources effectively to meet their academic, research, and informational needs.</p>
+            <ul className="grid sm:grid-cols-2 gap-4">
+              {FEATURES.map(({ icon: Icon, label, text, highlight }) => (
+                <li
+                  key={label}
+                  className={`flex gap-4 rounded-2xl border p-5 transition-shadow hover:shadow-md ${highlight ? "border-transparent text-white" : "border-gray-200 bg-white"
+                    }`}
+                  style={highlight ? { background: `linear-gradient(135deg, ${BRAND}, #B8581E)` } : undefined}
+                >
+                  <span
+                    className={`grid place-items-center w-10 h-10 rounded-xl shrink-0 ${highlight ? "bg-white/15 ring-1 ring-white/25" : ""}`}
+                    style={highlight ? undefined : { background: `${BRAND}12`, color: BRAND }}
+                  >
+                    <Icon size={18} />
+                  </span>
+                  <div>
+                    <h3 className={`text-[14px] font-bold ${highlight ? "" : "text-gray-800"}`}>{label}</h3>
+                    <p className={`mt-1 text-[13.5px] leading-relaxed ${highlight ? "text-white/90" : "text-gray-600"}`}>
+                      {text}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+
           <section>
             <SectionHeading>Reprographic Services &amp; Charges</SectionHeading>
             <p className="text-[14px] text-gray-600 leading-relaxed max-w-3xl">

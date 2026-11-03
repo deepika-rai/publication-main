@@ -8,9 +8,14 @@ const SectionHeading = ({ children }) => (
   </div>
 );
 
-const StaffCard = ({ name, img, designation }) => (
+const SIZES = {
+  md: 'w-32 h-32',
+  lg: 'w-44 h-44',
+};
+
+const StaffCard = ({ name, img, designation, size = 'md' }) => (
   <div className="group flex flex-col items-center text-center py-2">
-    <div className="w-32 h-32 rounded-full overflow-hidden ring-4 ring-white shadow-md bg-gray-100">
+    <div className={`${SIZES[size]} rounded-full overflow-hidden ring-4 ring-white shadow-md bg-gray-100`}>
       <img
         src={img}
         alt={name}
@@ -19,21 +24,57 @@ const StaffCard = ({ name, img, designation }) => (
       />
     </div>
     <p className="mt-3 font-semibold text-gray-800 text-[15px] leading-snug">{name}</p>
-    <p className="mt-1 text-gray-500 text-[13px] leading-snug">{designation}</p>
-    <span className="mt-3 h-0.5 w-8 rounded-full bg-[#E2691E] transition-all duration-300 group-hover:w-14" />
+    <p className="mt-3 text-gray-600 text-[14px] leading-snug">{designation}</p>
+    <span className="mt-2 h-0.5 w-8 rounded-full bg-[#E2691E] transition-all duration-300 group-hover:w-14" />
   </div>
 );
 
+const StaffCard2 = ({ name, img, designation }) => (
+  <div className="group bg-white rounded-xl border border-gray-100 shadow-sm p-4 flex items-center gap-4 hover:shadow-md transition-all duration-200">
+    <div className="w-20 h-20 rounded-full overflow-hidden ring-2 ring-gray-100 bg-gray-100 shrink-0  bg-gray-100">
+      <img
+        src={img}
+        alt={name}
+        loading="lazy"
+        className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+      />
+    </div>
+    <div className="min-w-0">
+      <p className="font-bold text-gray-800 text-[15px] leading-snug">{name}</p>
+      <p className="text-gray-400 text-[13px]">{designation}</p>
+    </div>
+  </div>
+);
+
+
+
+
 /* ─── Staff data ──────────────────────────────────────────────── */
 const STAFF_GROUPS = [
-  { name: 'Dr. Shaji John', img: libassets.staff2, designation: 'Library & Information Officer' },
-  { name: 'Shri Mahesh Chand Meena', img: libassets.staff3, designation: 'Library & Information Officer' },
+  { name: 'Shri ', img: libassets.staff8, designation: 'Assistant Library & Information Officer' },
   { name: 'Shri Balram Singh', img: libassets.staff1, designation: 'Assistant Library & Information Officer' },
   { name: 'Shri Saurabh Sharma', img: libassets.staff7, designation: 'Assistant Library & Information Officer' },
   { name: 'Ms. Garima Singh', img: libassets.staff6, designation: 'Multi Tasking Staff' },
   { name: 'Ms. Pratiksha', img: libassets.staff5, designation: 'Multi Tasking Staff' },
-  { name: 'Ms. Satyam', img: libassets.staff4, designation: 'Multi Tasking Staff' },
+  { name: 'Shri Satyam', img: libassets.staff4, designation: 'Multi Tasking Staff' },
 ];
+
+const STAFF_GROUPS2 = {
+  'Library & Information Officer': [
+    { name: 'Dr. Shaji John', img: libassets.staff2, designation: 'Assistant Library & Information Officer' },
+    { name: 'Shri Mahesh Chand Meena', img: libassets.staff3, designation: 'Assistant Library & Information Officer' },
+  ],
+  // 'Assistant Library and Information Officer': [
+  //   { name: 'Shri ', img: '' },
+  //   { name: 'Shri Balram Singh', img: libassets.staff1 },
+  //   { name: 'Shri Saurabh Sharma', img: libassets.staff7 },
+  // ],
+  // 'Multi Tasking Staff': [
+  //   { name: 'Ms. Garima Singh', img: libassets.staff6 },
+  //   { name: 'Ms. Pratiksha', img: libassets.staff5 },
+  //   { name: 'Ms. Satyam', img: libassets.staff4 },
+  // ],
+};
 
 
 
@@ -44,10 +85,22 @@ const StaffPanel = () => (
       The Library team is responsible for collection development, organization and preservation of Library resources, reader services, reference assistance, membership services, reprographic services and facilitation of academic and research activities.
     </p>
 
+    {Object.entries(STAFF_GROUPS2).map(([group, members], index) => (
+      <div key={group}>
+        {/* <SectionHeading>{group}</SectionHeading> */}
+        <div className="flex flex-col sm:flex-row gap-4">
+          {members.map((m) => (
+            <div key={m.name} className="flex-1">
+              <StaffCard {...m} size={index === 0 ? 'lg' : 'md'} />
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
 
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {STAFF_GROUPS.map((m) => (
-        <StaffCard key={m.name} {...m} />
+        <StaffCard2 key={m.name} {...m} />
       ))}
     </div>
 

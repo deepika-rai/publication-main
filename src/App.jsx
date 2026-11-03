@@ -53,6 +53,7 @@ import TermsAndConditions from './pages/library/TermsAndConditions.jsx';
 import QuickLinks from './pages/library/QuickLinks.jsx';
 import Disclaimer from './pages/library/Disclaimer.jsx';
 // import Rules from './pages/library/Rules.jsx';
+import Sitemap from './pages/library/Sitemap.jsx';
 
 
 
@@ -160,6 +161,7 @@ const App = () => {
         <Route path="/library/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/library/quick-links" element={<QuickLinks />} />
         <Route path="/library/disclaimer" element={<Disclaimer />} />
+        <Route path="/library/sitemap" element={<Sitemap />} />
         <Route path="/library/books"   element={<AppContextProvider><LibraryBooks /></AppContextProvider>} />
       </Route>
 

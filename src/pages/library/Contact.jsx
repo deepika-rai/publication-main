@@ -390,7 +390,7 @@ const Contact = () => (
         <div className="flex flex-wrap gap-4 mt-8">
           {[
             { icon: '⏱️', text: 'calmembership2026@gmail.com' },
-            { icon: '📍', text: '24, Tilak Marg, Dharohar Bhawan' },
+            { icon: '📍', text: 'Dharohar Bhawan, 24, Tilak Marg' },
             { icon: '📞', text: '011 2307 5357' },
           ].map((c) => (
             <span key={c.text} className="flex items-center gap-1.5 bg-white/10 border border-white/15 text-gray-300 text-[12px] px-3 py-1.5 rounded-full">
@@ -462,7 +462,7 @@ const Contact = () => (
               </h3>
               <MapPlaceholder />
               <p className="text-[12px] text-gray-400 mt-3 leading-relaxed">
-                24, Tilak Marg, Dharohar Bhawan,<br />
+                Dharohar Bhawan, 24, Tilak Marg,<br />
                 New Delhi, 110001 INDIA
               </p>
             </div>

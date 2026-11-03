@@ -46,6 +46,7 @@ import staff4 from "./lib/images/staff4.jpeg";
 import staff5 from "./lib/images/staff5.jpeg";
 import staff6 from "./lib/images/staff6.jpeg";
 import staff7 from "./lib/images/staff7.jpeg";
+import staff8 from "./lib/images/staff8.jpeg";
 import homebanner from "./lib/images/homebanner.jpg";
 import Form from "./lib/form.pdf";
 import FAQ from "./lib/FAQ.pdf";
@@ -101,6 +102,7 @@ export const libassets = {
   staff5,
   staff6,
   staff7,
+  staff8,
   Form,
   FAQ,
 

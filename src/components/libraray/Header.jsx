@@ -1,246 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { libassets } from "../../assets/libraryassets";
+import { navItems, topLinks } from './Nav';
 const baseURL = import.meta.env.VITE_BACKEND_URL;
 
-/* ─── Top-strip links ─────────────────────────────────────────── */
-const topLinks = [
-  { label: 'Sitemap', href: '#' },
-  { label: "What's New", href: '/library/whats-new', highlight: true },
-  { label: 'Login', href: '#' },
+
+/* ─── Supported languages ─────────────────────────────────────── */
+const LANGUAGES = [
+  { code: 'en', label: 'English' },
+  { code: 'hi', label: 'हिन्दी' },
 ];
 
-/* ─── Mega-menu data ──────────────────────────────────────────── */
-const navItems = [
-  { label: 'HOME', href: '/libraryhome' },
-  {
-    label: 'ABOUT US',
-    simple: true,
-    columns: [
-      { links: [
-        { label: 'About Library', href: '/library/about?tab=about' },
-        { label: 'Vision & Mission', href: '/library/about?tab=vision' },
-        { label: 'Who is Who', href: '/library/about?tab=staff' },
-        { label: 'Collections', href: '/library/about?tab=collection' },
-      ], },
-      { links: [{ label: 'FAQs', href: '/library/faq' }, { label: 'Testimonials', href: '/library/testimonials' }, 'Library Feedback Form'] },
-    ],
-  },
-
-  // {
-  //   label: "ABOUT THE ASI",
-  //   tabs: [
-  //     {
-  //       id: 'uabout',
-  //       label: 'About Us',
-  //       links: [
-  //         { label: 'Vision & Mission', href: '#' },
-  //         { label: 'History', href: '#' },
-  //         { label: 'Legacy', href: '#' },
-  //       ],
-
-  //     },
-  //     {
-  //       id: 'ulead',
-  //       label: 'Leadership',
-  //       links: [
-  //         { label: 'Director General Message', href: '/library/dg-message' },
-  //         { label: 'Joint Director Message', href: '/library/director-message' },
-  //       ],
-  //     },
-  //     {
-  //       id: 'ugov',
-  //       label: 'Governance',
-  //       links: ['Administrative Boards', 'Board of Management', 'Library Committee'],
-  //     },
-  //   ],
-  // },
-
-
-  // {
-  //   label: 'BOOK COLLECTIONS',
-  //   tabs: [
-  //     {
-  //       id: 'featured',
-  //       label: 'Featured Books',
-  //       links: [
-  //         'New Arrivals',
-  //         'Bestselling Books',
-  //         'Editor’s Picks',
-  //         'Recommended Reads',
-  //         'Award-Winning Books',
-  //         'Special Editions',
-  //       ],
-  //     },
-  //     {
-  //       id: 'fiction',
-  //       label: 'Fiction',
-  //       links: [
-  //         'Contemporary Fiction',
-  //         'Historical Fiction',
-  //         'Mystery & Thriller',
-  //         'Science Fiction',
-  //         'Fantasy',
-  //         'Short Stories',
-  //         'Literary Fiction',
-  //       ],
-  //     },
-  //     {
-  //       id: 'nonfiction',
-  //       label: 'Non-Fiction',
-  //       links: [
-  //         'History',
-  //         'Biography & Memoir',
-  //         'Culture & Society',
-  //         'Science & Technology',
-  //         'Philosophy',
-  //         'Travel & Exploration',
-  //         'Essays & Criticism',
-  //       ],
-  //     },
-  //     {
-  //       id: 'academic',
-  //       label: 'Academic & Research',
-  //       links: [
-  //         'Research Publications',
-  //         'Academic Monographs',
-  //         'Reference Books',
-  //         'Research Methodology',
-  //         'Journals & Periodicals',
-  //         'Conference Proceedings',
-  //         'Study Guides',
-  //       ],
-  //     },
-  //     {
-  //       id: 'authors',
-  //       label: 'Authors & Scholars',
-  //       links: [
-  //         'Featured Authors',
-  //         'New Authors',
-  //         'Authors by Subject',
-  //         'Author Profiles',
-  //         'Interviews & Conversations',
-  //         'Scholar Publications',
-  //       ],
-  //     },
-  //     {
-  //       id: 'series',
-  //       label: 'Book Series',
-  //       links: [
-  //         'ASI Classics',
-  //         'Heritage & History Series',
-  //         'Indian Knowledge Series',
-  //         'Modern Thought Series',
-  //         'Young Readers Collection',
-  //         'Illustrated Editions',
-  //       ],
-  //     },
-  //     {
-  //       id: 'resources',
-  //       label: 'Reader Resources',
-  //       links: [
-  //         'Reading Lists',
-  //         'Book Reviews',
-  //         'Reading Guides',
-  //         'Free Downloads',
-  //         'Sample Chapters',
-  //         'Frequently Asked Questions',
-  //         'Publication Catalog',
-  //       ],
-  //     },
-  //   ],
-  // },
-
-
-
-
-  {
-    label: 'REGISTER FOR MEMBERSHIP',
-    simple: true,
-    columns: [
-      { links: [{ label: 'Membership Plan', href: '/library/membership-plan' }, { label: 'Membership Form', href: `${import.meta.env.BASE_URL}docs/form.pdf`, target: '_blank' }] },
-    ],
-  },
-
-  // {
-  //   label: "STUDENT'S CORNER",
-  //   tabs: [
-  //     {
-  //       id: 'stulibservices',
-  //       label: 'Library Services',
-  //       links: [
-  //         'Library Membership',
-  //         'Library Timings',
-  //         'Borrowing & Return Policy',
-  //         'Book Renewal',
-  //         'Inter-Library Loan',
-  //         'Library Rules & Regulations',
-  //       ],
-  //     },
-  //     {
-  //       id: 'stulibresearch',
-  //       label: 'Research Support',
-  //       links: [
-  //         'Research Guides',
-  //         'Thesis & Dissertation Collection',
-  //         'Citation & Referencing Guide',
-  //         'Plagiarism & Academic Integrity',
-  //         'Research Databases',
-  //         'Historical & Archaeological Resources',
-  //       ],
-  //     },
-  //     {
-  //       id: 'stustudy',
-  //       label: 'Student Support',
-  //       links: [
-  //         'New Student Library Guide',
-  //         'How to Find a Book',
-  //         'How to Use the Catalogue',
-  //         'Library Orientation',
-  //         'Ask a Librarian',
-  //         'Frequently Asked Questions',
-  //       ],
-  //     },
-  //     {
-  //       id: 'studigital',
-  //       label: 'Digital Resources',
-  //       links: [
-  //         'ASI Digital Collections',
-  //         'Digitized Books & Manuscripts',
-  //         'Online Archives',
-  //         'Open Access Resources',
-  //         'National Digital Library',
-  //         'Academic E-Resources',
-  //       ],
-  //     },
-  //   ],
-  // },
-
-  { label: 'SERVICES', href: '/library/services' },
-  { label: 'LIBRARY RULES', href: '/library/rules' },
-  { label: 'DOs & DONTs', href: '/library/dos-and-donts' },
-  {
-    label: 'DOWNLOADS',
-    simple: true,
-    columns: [
-      {
-        links: [
-          { label: 'Application Form', href: `${import.meta.env.BASE_URL}docs/form.pdf`, target: '_blank' },
-          { label: 'Rules & Regulations', href: `${import.meta.env.BASE_URL}docs/Libraray Rules.pdf`, target: '_blank' },
-          { label: 'Documents Checklist', href: `${import.meta.env.BASE_URL}docs/Document.pdf`, target: '_blank' },
-          { label: 'Reprographic Charges', href: `${import.meta.env.BASE_URL}docs/Reprographic Services.pdf`, target: '_blank' },
-          { label: 'FAQ', href: `${import.meta.env.BASE_URL}docs/FAQ.pdf`, target: '_blank' },
-        ],
-      },
-    ],
-  },
-  { label: 'GALLERY', href: '/library/gallery' },
-  { label: 'EVENTS & ACTIVITIES', href: '/library/events-and-activities' },
-  { label: 'QUICK LINKS', href: '/library/quick-links' },
-  { label: 'ASK A LIBRARIAN', href: '/library/contact' },
-  // { label: 'BLOGS', href: '/library/blogs' },
-  // { label: 'REGISTER NOW', href: '/membership/form', flash: true },
-];
 
 /* ─── Sub-components ──────────────────────────────────────────── */
 
@@ -385,20 +155,26 @@ const Header = () => {
             </a>
           </div>
 
-          {/* Top-strip links */}
-          <ul className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-gray-600 py-1">
-            {topLinks.map((l) => (
-              <li key={l.label} className="border-r border-gray-300 last:border-r-0 pr-3 last:pr-0">
-                <Link
-                  to={l.href}
-                  className={`hover:text-[#E2691E] transition-colors whitespace-nowrap
+          {/* Top-strip links  + Bhashini widget */}
+          <div className="flex items-center gap-4">
+            <ul className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-gray-600 py-1">
+              {topLinks.map((l) => (
+                <li key={l.label} className="border-r border-gray-300 last:border-r-0 pr-3 last:pr-0">
+                  <Link
+                    to={l.href}
+                    className={`hover:text-[#E2691E] transition-colors whitespace-nowrap
                     ${l.highlight ? 'text-[#E2691E] font-semibold' : ''}`}
-                >
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            {/* Bhashini Translation Widget */}
+            <div className="bhashini-plugin-container" />
+          </div>
+
         </div>
       </div>
 
