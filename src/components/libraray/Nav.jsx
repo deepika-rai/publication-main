@@ -19,7 +19,7 @@ export const navItems = [
                     { label: 'Collections', href: '/library/about?tab=collection' },
                 ],
             },
-            { links: [{ label: 'FAQs', href: '/library/faq' }, { label: 'Testimonials', href: '/library/testimonials' }, 'Library Feedback Form'] },
+            { links: [{ label: 'FAQs', href: '/library/faq' }, { label: 'Testimonials', href: '/library/testimonials' }, { label: 'Library Feedback Form', href: `${import.meta.env.BASE_URL}docs/FeedbackForm.pdf`, target: '_blank' }] },
         ],
     },
 

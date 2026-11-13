@@ -131,7 +131,7 @@ const Testimonials = () => {
                 <div className="relative max-w-[1200px] mx-auto px-4 text-center">
 
                     {/* Breadcrumb */}
-                    <nav className="flex items-center justify-center gap-2 text-xs text-gray-500 mb-5">
+                    <nav className="flex items-center justify-center gap-2 text-xs text-gray-500 mb-4">
                         <Link
                             to="/libraryhome"
                             className="hover:text-[#E2691E] transition-colors"
@@ -148,7 +148,7 @@ const Testimonials = () => {
                         <span className="text-white">Testimonials</span>
                     </nav>
 
-                    <h1 className="text-3xl md:text-6xl font-bold text-white mb-4 leading-tight">
+                    <h1 className="text-3xl md:text-4xl font-bold text-white mb-3 leading-tight">
                         Testimonials
                     </h1>
                 </div>

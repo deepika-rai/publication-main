@@ -35,14 +35,14 @@ const EventsAndActivities = () => {
 
                 <div className="relative max-w-[1200px] mx-auto px-4 text-center">
                     {/* breadcrumb */}
-                    <nav className="flex items-center justify-center gap-2 text-xs text-gray-500 mb-5">
+                    <nav className="flex items-center justify-center gap-2 text-xs text-gray-500 mb-4">
                         <Link to="/libraryhome" className="hover:text-[#E2691E] transition-colors">Home</Link>
                         <span>/</span>
                         <span className="text-gray-400">Library</span>
                         <span>/</span>
                         <span className="text-white">Activities</span>
                     </nav>
-                    <h1 className="text-3xl md:text-6xl font-bold text-white mb-4 leading-tight">
+                    <h1 className="text-3xl md:text-4xl font-bold text-white mb-3 leading-tight">
                         Events & <span className="text-[#F5A973]">Activities</span>
                     </h1>
                 </div>
