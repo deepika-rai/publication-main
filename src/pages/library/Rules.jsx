@@ -59,7 +59,7 @@ const SECTIONS = [
           { title: "Step 6 – Membership Card", text: "After completion of registration, a CAL Membership Card will be issued to the approved member." },
         ]
       },
-      { t: "p", text: "Initially, the membership process will be conducted through offline/manual registration. Online registration and payment facilities may be introduced subsequently, subject to approval and availability of infrastructure." },
+      { t: "p", text: "" },
     ],
   },
   {

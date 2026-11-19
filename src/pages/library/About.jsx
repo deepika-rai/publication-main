@@ -51,25 +51,36 @@ const AboutPanel = () => (
     <div>
       <SectionHeading>History</SectionHeading>
       <p className="text-[14px] text-gray-600 leading-relaxed sm:text-justify">
-        The Library Foundation– 1902 in Shimla. John Marshall from the very beginning laid emphasis on the necessity of building up a good library for the survey and even in 1903-04 made a provision of Rs. 4000 for the purpose”. The Central Archaeological Library has now grown into an institution unique of its kind in India, with some forty thousand books and volumes of periodicals on Indology and history, archaeology, etc., of different parts of the world. No efforts are spared to keep it up to date. Writing in 1939, Marshall called it “the best archaeological library in India, perhaps in Asia”, J. Cumming, Revealing India’s Past (London, 1939:, p.31)." If it was so fourteen years back, it is much more so today”.
+        The Central Archaeological Library (CAL) was established in <b>1902 at Shimla</b>. Since its inception, Sir John Marshall, the then Director-General of the Archaeological Survey of India, emphasized the importance of establishing a dedicated library to support the research and scholarly activities of the Survey. Accordingly, a provision of ₹4,000 was made for this purpose in 1903–04.
+      </p>
+      <p className="text-[14px] text-gray-600 leading-relaxed sm:text-justify">Over the years, the Central Archaeological Library has evolved into a specialised library of national importance, housing a rich and diverse collection of books and periodicals on archaeology, history, art, culture, architecture, Indology, and allied disciplines relating to India and other parts of the world. Its extensive collections and research resources continue to support the academic and scholarly pursuits of researchers, historians, archaeologists, and other users, while evolving to meet their changing research and information needs.
+      </p>
+      <p className="text-[14px] text-gray-600 leading-relaxed sm:text-justify">The significance of the Library was acknowledged by Sir John Marshall in his 1939 publication, <i>Revealing India’s Past</i>, where it was described as “the best archaeological library in India, perhaps in Asia” (J. Cumming, Revealing India’s Past, London, 1939, p. 31). This historical recognition reflects the Library’s longstanding contribution to archaeological research and scholarship. Since then, the Library has continued to develop its collections and services, preserving its heritage while supporting contemporary research in archaeology and allied disciplines
       </p>
     </div>
 
-    {/* Stats */}
+    
     <div>
       <SectionHeading>Rich Collections &amp; Heritage Resources</SectionHeading>
-      <p className="text-[14px] text-gray-600 leading-relaxed mb-6 sm:text-justify">
-        The library houses a rich and diverse collection of approximately 1.5 lakh books and 90 journal titles dating back to 1960, covering a wide range of subjects such as Archaeology, Anthropology, Art, Architecture, Ancient History, Indian Culture, Sociology, Epigraphy, Indology, and related disciplines. Its manuscript collection comprises around 6,000 preserved manuscripts and 10,000 unpreserved manuscripts, reflecting the depth and historical significance of India’s intellectual and cultural heritage. The library has also undertaken digitization initiatives, with 12,261 rare books available online for general academic and research pursuits. Its Oriental Collection, comprising nearly 10,000 works, includes original texts in languages such as Sanskrit and Prakrit, along with translated works in English and Hindi, covering various religious and cultural traditions. Among its notable holdings are the A. Cunningham Diaries and unpublished reports (1861–62 to 1888) and a collection of approximately 6,000 portfolios documenting archaeological heritage sites in India and abroad, representing material from both the pre- and post-Independence periods. The library also provides access to daily newspapers and magazines in both print and electronic formats, with e-subscriptions available to users since June 2020.
+      <p className="text-[14px] text-gray-600 leading-relaxed mt-6 sm:text-justify">The Central Archaeological Library houses a rich and diverse collection of approximately <b>1.2 lakh books and 90 journal titles,</b> with journal holdings dating back to 1960. Its specialised collection covers a wide range of disciplines, including Archaeology, Anthropology, Art, Architecture, Ancient History, Indian Culture, Sociology, Epigraphy, Indology, and other allied subjects.
       </p>
+      <p className="text-[14px] text-gray-600 leading-relaxed mt-6 sm:text-justify">The Library possesses a significant collection of approximately <b>21,000 rare Tibetan manuscripts,</b> reflecting the richness and historical significance of India's intellectual, cultural, and religious heritage. As part of its digitisation initiatives, <b>12,261 rare books have been made available online,</b> facilitating access for academic, scholarly, and research purposes.</p>
+      {/* <p className="text-[14px] text-gray-600 leading-relaxed mb-6 sm:text-justify">
+        The library houses a rich and diverse collection of approximately 1.2 lakh books and 90 journal titles dating back to 1960, covering a wide range of subjects such as Archaeology, Anthropology, Art, Architecture, Ancient History, Indian Culture, Sociology, Epigraphy, Indology, and related disciplines. Its manuscript collection comprises around 6,000 preserved manuscripts and 10,000 unpreserved manuscripts, reflecting the depth and historical significance of India’s intellectual and cultural heritage. The library has also undertaken digitization initiatives, with 12,261 rare books available online for general academic and research pursuits. Its Oriental Collection, comprising nearly 10,000 works, includes original texts in languages such as Sanskrit and Prakrit, along with translated works in English and Hindi, covering various religious and cultural traditions. Among its notable holdings are the A. Cunningham Diaries and unpublished reports (1861–62 to 1888) and a collection of approximately 6,000 portfolios documenting archaeological heritage sites in India and abroad, representing material from both the pre- and post-Independence periods. The library also provides access to daily newspapers and magazines in both print and electronic formats, with e-subscriptions available to users since June 2020.
+      </p> */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <StatCard value="1,20,000" label="Books & Volumes" icon="📖" />
         <StatCard value="21,000" label="Rare Manuscripts" icon="📜" />
         <StatCard value="12,261" label="Digitized collections" icon="🏢" />
         <StatCard value="5,000" label="Oriental Collection" icon="🏢" />
       </div>
-      <p className="text-[14px] text-gray-600 leading-relaxed mt-6 sm:text-justify">
-        The library further preserves several special collections, including Tibetan Manuscripts, Annual Reports of the Archaeological Survey of India (ASI), Cunningham Reports, Ancient India, Annual Reports on Epigraphy, Memoirs of the ASI, Portfolios, Maps and Toposheets, and other important reference materials. Its collections also include the personal and scholarly works of several eminent historians, archaeologists, epigraphists, and scholars, including John Marshall, M. S. Vats, Ernest J. H. Mackay, D. R. Sahani, A. Ghosh, Sir William Jones, James Prinsep, James Fergusson, Charles Walkin, A. Cunningham, and R. G. Bhandarkar, making the library an important repository for the study and research of India’s archaeological, historical, cultural, and intellectual heritage.
+      <p className="text-[14px] text-gray-600 leading-relaxed mt-6 sm:text-justify">The <b>Oriental Collection</b>, comprising nearly 5,000 works, includes original texts in languages such as Sanskrit and Prakrit, together with English and Hindi translations, covering diverse religious, philosophical, and cultural traditions. Among its notable archival holdings are the <b>diaries of Alexander Cunningham and unpublished reports spanning 1861–62 to 1888,</b> which constitute valuable sources for archaeological research and historical documentation.
       </p>
+      <p className="text-[14px] text-gray-600 leading-relaxed mt-6 sm:text-justify">The Library also maintains extensive collection of portfolios documenting archaeological sites and heritage monuments in India and abroad, representing material from both the pre-Independence and post-Independence periods. In addition to its specialised research resources, the Library provides access to daily newspapers and magazines to support the informational needs of users.
+      </p>
+      {/* <p className="text-[14px] text-gray-600 leading-relaxed mt-6 sm:text-justify">
+        The library further preserves several special collections, including Tibetan Manuscripts, Annual Reports of the Archaeological Survey of India (ASI), Cunningham Reports, Ancient India, Annual Reports on Epigraphy, Memoirs of the ASI, Portfolios, Maps and Toposheets, and other important reference materials. Its collections also include the personal and scholarly works of several eminent historians, archaeologists, epigraphists, and scholars, including John Marshall, M. S. Vats, Ernest J. H. Mackay, D. R. Sahani, A. Ghosh, Sir William Jones, James Prinsep, James Fergusson, Charles Walkin, A. Cunningham, and R. G. Bhandarkar, making the library an important repository for the study and research of India’s archaeological, historical, cultural, and intellectual heritage.
+      </p> */}
     </div>
 
     {/* Infrastructure */}
@@ -107,7 +118,7 @@ const AboutPanel = () => (
       </p>
     </blockquote> */}
 
-   
+
   </div>
 );
 
@@ -165,7 +176,7 @@ const VisionPanel = () => (
           { icon: '🌐', title: 'Digital Access', desc: 'Provide seamless access to e-resources, e-journals, online databases, and digital collections.' },
           { icon: '🎓', title: 'User Education', desc: 'Conduct library orientation, information literacy programmes and training sessions to maximise effective use of library resources.' },
           { icon: '🤝', title: 'Resource Sharing', desc: 'Participate in inter-library loan, document delivery networks.' },
-          { icon: '📊', title: 'Research Support', desc: 'Offer specialised reference services, bibliographic assistance, and research support.' },          
+          { icon: '📊', title: 'Research Support', desc: 'Offer specialised reference services, bibliographic assistance, and research support.' },
         ].map((obj) => (
           <FeatureCard key={obj.title} icon={obj.icon} title={obj.title} desc={obj.desc} />
         ))}

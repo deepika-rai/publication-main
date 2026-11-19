@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { libassets } from "../../assets/libraryassets";
+import axios from "axios";
 
 /* ─── Leadership data ─────────────────────────────────────────── */
 const LEADERSHIP = [
@@ -190,12 +191,63 @@ const ContactForm = () => {
     if (errors[e.target.name]) setErrors((er) => ({ ...er, [e.target.name]: '' }));
   };
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const errs = validate();
+  //   if (Object.keys(errs).length) { setErrors(errs); return; }
+  //   setLoading(true);
+  //   setTimeout(() => { setLoading(false); setSubmitted(true); }, 1200);
+  // };
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const errs = validate();
-    if (Object.keys(errs).length) { setErrors(errs); return; }
+
+    if (Object.keys(errs).length) {
+      setErrors(errs);
+      return;
+    }
+
     setLoading(true);
-    setTimeout(() => { setLoading(false); setSubmitted(true); }, 1200);
+    setErrors({});
+
+    try {
+      const { data } = await axios.post(
+        "/api/user/submitContactForm",
+        form
+      );
+
+      if (!data.success) {
+        throw new Error(data.message || "Failed to submit enquiry.");
+      }
+
+      setSubmitted(true);
+
+      // Reset form after successful submission
+      setForm({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
+
+    } catch (error) {
+      console.error("Contact form error:", error);
+
+      setErrors({
+        submit:
+          error.response?.data?.message ||
+          error.message ||
+          "Something went wrong. Please try again.",
+      });
+
+    } finally {
+      setLoading(false);
+    }
+
   };
 
   const inputBase =

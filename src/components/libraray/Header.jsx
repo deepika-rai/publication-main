@@ -139,7 +139,7 @@ const Header = () => {
         <div className="max-w-[1500px] mx-auto px-4 flex items-center justify-between">
           {/* Logo */}
           <div className="py-2">
-            <a href="/libraryhome" className="block">
+            <a href="https://asi.nic.in/" className="block">
               <img
                 src={libassets.asilogo}
                 alt="ASI LIBRARY Logo"

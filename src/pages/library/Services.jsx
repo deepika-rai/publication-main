@@ -22,9 +22,9 @@ const CONDITIONS = [
 
 const FEATURES = [
   { icon: Users, label: "Reference and Research Assistance", text: "Assistance is provided to users in quickly locating relevant books, journals, reference works, reports, and other information resources available in the library." },
-  { icon: ClipboardList, label: "Information Retrieval and Bibliographic Assistance", text: "Users may seek guidance in identifying relevant literature, bibliographic references, and research materials related to their areas of interest."},
+  { icon: ClipboardList, label: "Information Retrieval and Bibliographic Assistance", text: "Users may seek guidance in identifying relevant literature, bibliographic references, and research materials related to their areas of interest." },
   { icon: Library, label: "Library Catalogue Assistance", text: "Guidance is provided in searching the library catalogue to identify and locate books and other available resources." },
-  { icon: BookOpen, label: "Subject-Based Information Support", text: "The Library assists researchers, students, academicians, and other users in identifying and accessing information resources relating to archaeology, ancient and medieval Indian history, art and culture, monuments, architecture, epigraphy, numismatics, and allied subjects through appropriate subject-based information retrieval tools and bibliographic resources." }, 
+  { icon: BookOpen, label: "Subject-Based Information Support", text: "The Library assists researchers, students, academicians, and other users in identifying and accessing information resources relating to archaeology, ancient and medieval Indian history, art and culture, monuments, architecture, epigraphy, numismatics, and allied subjects through appropriate subject-based information retrieval tools and bibliographic resources." },
 ];
 
 function SectionHeading({ children }) {
@@ -83,7 +83,7 @@ const Services = () => {
           </h1>
         </div>
       </div>
-      
+
       {/* ── Services ── */}
       <div className="relative max-w-6xl mx-auto px-4 py-16">
         <div className="space-y-14">

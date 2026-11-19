@@ -324,7 +324,7 @@ const Pricing = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
-              { icon: '📖', title: '1.5 Lakh+ Volumes', desc: 'Access one of the richest humanities and archaeology collections in India.' },
+              { icon: '📖', title: '1.2 Lakh+ Volumes', desc: 'Access one of the richest humanities and archaeology collections in India.' },
               { icon: '💻', title: 'Digital Resources', desc: 'Full access to e-journals, e-books, and the digital Virasat archive.' },
               { icon: '🔬', title: 'Research Support', desc: 'Dedicated research assistance from qualified library professionals.' },
               { icon: '📜', title: 'Rare Manuscripts', desc: 'Access to the unique manuscripts collection curated over 200 years.' },
